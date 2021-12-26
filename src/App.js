@@ -1,4 +1,4 @@
-import { PostCreatePage } from "./views";
+import React, { PostCreatePage } from './views';
 
 const App = () => {
   return <PostCreatePage />;
