@@ -1,14 +1,14 @@
-import React, { useState, useEffect, useRef } from "react";
-import styled from "@emotion/styled";
-import PropTypes from "prop-types";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import React, { useState, useEffect, useRef } from 'react';
+import styled from '@emotion/styled';
+import PropTypes from 'prop-types';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 const COLOR_SET = Object.freeze({
-  normalPink: "#FF8585",
-  normalGreen: "#3BAB29",
-  normalBlack: "#2F3438",
-  disabled: "#aaaaaa",
-  brand: "#2A2E56",
+  normalPink: '#FF8585',
+  normalGreen: '#3BAB29',
+  normalBlack: '#2F3438',
+  disabled: '#aaaaaa',
+  brand: '#2A2E56'
 });
 
 const SelectionBox = ({
@@ -23,11 +23,9 @@ const SelectionBox = ({
   margin,
   onChange,
   propRef,
-  usedAt,
+  usedAt
 }) => {
-  const [color, setColor] = useState(
-    decideColor({ required, usedAt, disabled })
-  );
+  const [color, setColor] = useState(decideColor({ required, usedAt, disabled }));
   const selectRef = useRef(null);
 
   const handleColorChange = (e) => {
@@ -42,7 +40,7 @@ const SelectionBox = ({
         required,
         usedAt,
         chosen: false,
-        disabled,
+        disabled
       });
       setColor(nextColor);
     }
@@ -65,8 +63,7 @@ const SelectionBox = ({
         fontSize={fontSize}
         height={height}
         id={id}
-        name={name}
-      >
+        name={name}>
         <Option>{defaultOption}</Option>
         {options?.map((option, index) => (
           <Option key={index}>{option}</Option>
@@ -81,18 +78,20 @@ const Wrapper = styled.div`
   display: inline-block;
   position: relative;
   margin: ${({ margin }) => margin};
-  height: ${({ height }) => height || "2.4rem"};
+  height: ${({ height }) => height || '2.4rem'};
   border-bottom: ${({ color }) => `0.15rem solid ${color}`};
 `;
 
 const Select = styled.select`
+  position: relative;
+  z-index: 1;
   width: 100%;
   height: 100%;
   padding: 0.1rem 2rem 0 0.5rem;
   background: transparent;
   border: 0;
   outline: 0;
-  font-size: ${({ fontSize }) => fontSize || "1.6rem"};
+  font-size: ${({ fontSize }) => fontSize || '1.6rem'};
   color: ${({ color }) => color};
   font-weight: bold;
 `;
@@ -122,15 +121,15 @@ SelectionBox.propTypes = {
   onChange: PropTypes.func,
   name: PropTypes.string,
   propRef: PropTypes.shape({
-    current: PropTypes.instanceOf(Element),
+    current: PropTypes.instanceOf(Element)
   }),
-  usedAt: PropTypes.string,
+  usedAt: PropTypes.string
 };
 
 export default SelectionBox;
 
 const decideColor = ({ required, chosen, disabled, usedAt }) => {
-  if (usedAt === "filter") {
+  if (usedAt === 'filter') {
     return COLOR_SET.brand;
   }
 
@@ -140,7 +139,5 @@ const decideColor = ({ required, chosen, disabled, usedAt }) => {
   return COLOR_SET.brand;
 };
 
-const isDefaultOptionSelectedInRef = (ref) =>
-  ref.current.value === ref.current[0].textContent;
-const isDefaultOptionSelectedInEvent = (e) =>
-  e.target[0].textContent === e.target.value;
+const isDefaultOptionSelectedInRef = (ref) => ref.current.value === ref.current[0].textContent;
+const isDefaultOptionSelectedInEvent = (e) => e.target[0].textContent === e.target.value;
