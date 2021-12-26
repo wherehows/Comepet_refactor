@@ -1,9 +1,8 @@
-import React, { useMemo } from "react";
-import styled from "@emotion/styled";
-import PropTypes from "prop-types";
-import useClickAway from "@/hooks/useClickAway";
-// import useBlockScroll from '@/hooks/useBlockScroll';
-import ReactDOM from "react-dom";
+import React, { useMemo } from 'react';
+import styled from '@emotion/styled';
+import PropTypes from 'prop-types';
+import useClickAway from '@/hooks/useClickAway';
+import ReactDOM from 'react-dom';
 
 const Modal = ({
   children,
@@ -16,12 +15,10 @@ const Modal = ({
   width,
   padding,
   boxShadow,
-  maxWidth,
+  maxWidth
 }) => {
   const [ref] = useClickAway(() => onClose && onClose());
-  const el = useMemo(() => document.getElementById("root"), []);
-
-  // useBlockScroll(document.body);
+  const el = useMemo(() => document.getElementById('root'), []);
 
   return ReactDOM.createPortal(
     <Background>
@@ -35,8 +32,7 @@ const Modal = ({
         width={width}
         padding={padding}
         boxShadow={boxShadow}
-        maxWidth={maxWidth}
-      >
+        maxWidth={maxWidth}>
         {children}
       </ContentWrapper>
     </Background>,
@@ -56,19 +52,18 @@ const Background = styled.div`
 
 const ContentWrapper = styled.div`
   position: absolute;
-  top: ${({ top }) => top || "50%"};
-  left: ${({ left }) => left || "50%"};
+  top: ${({ top }) => top || '50%'};
+  left: ${({ left }) => left || '50%'};
   bottom: ${({ bottom }) => bottom};
   right: ${({ right }) => right};
-  transform: ${({ transform }) => transform || "translate(-50%, -50%)"};
+  transform: ${({ transform }) => transform || 'translate(-50%, -50%)'};
   z-index: 1000;
-  width: ${({ width }) => width || "100%"};
-  max-width: ${({ maxWidth }) => maxWidth || "100%"};
+  width: ${({ width }) => width || '100%'};
+  max-width: ${({ maxWidth }) => maxWidth || '100%'};
   padding: ${({ padding }) => padding};
   border-radius: 1.6rem;
   background-color: ${({ theme }) => theme.colors.normalWhite};
-  box-shadow: ${({ boxShadow, theme }) =>
-    theme.shadows[boxShadow] || theme.shadows.normal};
+  box-shadow: ${({ boxShadow, theme }) => theme.shadows[boxShadow] || theme.shadows.normal};
 `;
 
 Modal.propTypes = {
@@ -76,7 +71,7 @@ Modal.propTypes = {
   top: PropTypes.string,
   left: PropTypes.string,
   bottom: PropTypes.string,
-  right: PropTypes.string,
+  right: PropTypes.string
 };
 
 export default Modal;

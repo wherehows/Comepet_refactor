@@ -1,8 +1,6 @@
-import React, { useState } from "react";
-import styled from "@emotion/styled";
-// import { useNavigate } from "react-router-dom";
-import { Button } from "@/components/Button";
-// import { ShortHeader } from "@/components/Header";
+import React, { useState } from 'react';
+import styled from '@emotion/styled';
+import { Button } from '@/components/Button';
 import {
   Status,
   Date,
@@ -12,11 +10,11 @@ import {
   ChipInformation,
   HashTag,
   Content,
-  PetPhoto,
-} from "./Category";
-import ErrorModal from "./ErrorModal/ErrorModal";
-import useForm from "@/hooks/useForm";
-import { placeData, animalData } from "@/data/data";
+  PetPhoto
+} from './Category';
+import ErrorModal from './ErrorModal/ErrorModal';
+import useForm from '@/hooks/useForm';
+import { placeData, animalData } from '@/data/data';
 
 const PostCreatePage = () => {
   const [isErrorExist, setIsErrorExist] = useState(false);
@@ -36,18 +34,15 @@ const PostCreatePage = () => {
       chipNumber: null,
       tags: [],
       content: null,
-      images: null,
+      images: null
     },
     onSubmit: async () => {
       const formData = makeFormDataAppendingImages(values.images);
 
       const { images, ...param } = values; // eslint-disable-line no-unused-vars
-      formData.append(
-        "param",
-        new Blob([JSON.stringify(param)], { type: "application/json" })
-      );
+      formData.append('param', new Blob([JSON.stringify(param)], { type: 'application/json' }));
     },
-    handleNavigate: (res) => {},
+    handleNavigate: () => {},
     validate: ({
       status,
       date,
@@ -58,23 +53,23 @@ const PostCreatePage = () => {
       animalKindName,
       sex,
       age,
-      content,
+      content
     }) => {
       const errors = {};
 
-      if (!status) errors.status = "상태를 입력해주세요";
-      if (!date) errors.date = "날짜를 입력해주세요";
-      if (!cityId) errors.cityId = "시/도를 선택해주세요";
-      if (!townId) errors.townId = "시/군/구를 선택해주세요";
-      if (!animalId) errors.animalId = "동물 종류를 선택해주세요";
-      if (!animalKindName) errors.animalKindName = "품종을 선택해주세요";
-      if (!telNumber) errors.telNumber = "전화번호를 입력해주세요";
-      if (!sex) errors.sex = "성별을 선택해주세요";
-      if (!age) errors.age = "나이를 입력해주세요";
-      if (!content) errors.content = "내용을 작성해주세요";
+      if (!status) errors.status = '상태를 입력해주세요';
+      if (!date) errors.date = '날짜를 입력해주세요';
+      if (!cityId) errors.cityId = '시/도를 선택해주세요';
+      if (!townId) errors.townId = '시/군/구를 선택해주세요';
+      if (!animalId) errors.animalId = '동물 종류를 선택해주세요';
+      if (!animalKindName) errors.animalKindName = '품종을 선택해주세요';
+      if (!telNumber) errors.telNumber = '전화번호를 입력해주세요';
+      if (!sex) errors.sex = '성별을 선택해주세요';
+      if (!age) errors.age = '나이를 입력해주세요';
+      if (!content) errors.content = '내용을 작성해주세요';
       Object.keys(errors).length !== 0 && setIsErrorExist(isErrorExist);
       return errors;
-    },
+    }
   });
 
   return (
@@ -83,11 +78,7 @@ const PostCreatePage = () => {
       <Form onsumbit={handleSubmit}>
         <Status onChange={handleChange} />
         <Date margin="5rem 0 0 0" onChange={handleChange} />
-        <Place
-          margin="5rem 0 0 0"
-          onChange={handleChange}
-          placeData={placeData.cities}
-        />
+        <Place margin="5rem 0 0 0" onChange={handleChange} placeData={placeData.cities} />
         <Contact margin="5rem 0 0 0" onChange={handleChange} />
         <PetInformation
           margin="5rem 0 0 0"
@@ -104,8 +95,7 @@ const PostCreatePage = () => {
             margin="5% auto 0 auto"
             bgColor="normalOrange"
             onClick={handleSubmit}
-            type="button"
-          >
+            type="button">
             작성하기
           </Button>
           <Button
@@ -113,8 +103,7 @@ const PostCreatePage = () => {
             margin="5% auto 0 auto"
             bgColor="brand"
             onClick={handleSubmit}
-            type="button"
-          >
+            type="button">
             취소하기
           </Button>
         </ButtonWrapper>
@@ -140,10 +129,10 @@ const makeFormDataAppendingImages = (images) => {
   const formData = new FormData();
 
   for (let i = 0; i < images?.length; i++) {
-    formData.append("images", images[i]);
+    formData.append('images', images[i]);
   }
 
-  if (!images) formData.append("images", []);
+  if (!images) formData.append('images', []);
 
   return formData;
 };

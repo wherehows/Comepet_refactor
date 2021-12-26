@@ -1,12 +1,12 @@
-import React, { useState, useEffect, useRef, useMemo } from "react";
-import PropTypes from "prop-types";
-import styled from "@emotion/styled";
-import LineBreakWrapper from "../Common/LineBreakWrapper";
-import { Label } from "@/components/Label";
-import { SelectionBox } from "@/components/SelectionBox";
-import { Input } from "@/components/Input";
-import { CheckBox } from "@/components/CheckBox";
-import { GENDER } from "@/utils/constants";
+import React, { useState, useEffect, useRef, useMemo } from 'react';
+import PropTypes from 'prop-types';
+import styled from '@emotion/styled';
+import LineBreakWrapper from '../Common/LineBreakWrapper';
+import { Label } from '@/components/Label';
+import { SelectionBox } from '@/components/SelectionBox';
+import { Input } from '@/components/Input';
+import { CheckBox } from '@/components/CheckBox';
+import { GENDER } from '@/utils/constants';
 
 const PetInformation = ({ margin, onChange, animalData }) => {
   const [animal, setAnimal] = useState(null);
@@ -27,41 +27,40 @@ const PetInformation = ({ margin, onChange, animalData }) => {
   }, [animal, animalData]);
 
   useEffect(() => {
-    if (animal !== null && animal !== "동물") {
+    if (animal !== null && animal !== '동물') {
       const targetObject = animalData?.find(({ name }) => name === animal);
       const targetId = targetObject.id;
-      onChange({ target: { name: "animalId", value: targetId } });
+      onChange({ target: { name: 'animalId', value: targetId } });
     } else if (animal === null) {
-      onChange({ target: { name: "animalId", value: null } });
+      onChange({ target: { name: 'animalId', value: null } });
     }
-  }, [animal, onChange, animalData]);
+  }, [animal]);
 
   const handleChange = (e) => {
     if (isSelectChange(e)) {
       if (isAnimalSelection(e)) {
         if (isDefalutOptionSelected(e)) {
           setAnimal(null);
-          onChange(makeObjectForm("animalId", null));
+          onChange(makeObjectForm('animalId', null));
         } else {
           setAnimal(e.target.value);
-          onChange(makeObjectForm("animalId", e.target.value));
+          onChange(makeObjectForm('animalId', e.target.value));
         }
 
         kindsCheckBoxRef.current && (kindsCheckBoxRef.current.checked = false);
-        kindsSelectionBoxRef.current &&
-          (kindsSelectionBoxRef.current[0].selected = "selected");
+        kindsSelectionBoxRef.current && (kindsSelectionBoxRef.current[0].selected = 'selected');
         setIsAnimalUnknown(false);
-        onChange(makeObjectForm("animalKindName", null));
+        onChange(makeObjectForm('animalKindName', null));
         return;
       }
 
       if (isKindsSelection(e)) {
         if (isDefalutOptionSelected(e)) {
           setAnimalKindName(null);
-          onChange(makeObjectForm("animalKindName", null));
+          onChange(makeObjectForm('animalKindName', null));
         } else {
           setAnimalKindName(e.target.value);
-          onChange(makeObjectForm("animalKindName", e.target.value));
+          onChange(makeObjectForm('animalKindName', e.target.value));
         }
         return;
       }
@@ -69,15 +68,15 @@ const PetInformation = ({ margin, onChange, animalData }) => {
       if (isSexSelection(e)) {
         if (isDefalutOptionSelected(e)) {
           setSex(null);
-          onChange(makeObjectForm("sex", null));
+          onChange(makeObjectForm('sex', null));
         } else {
           setSex(e.target.value);
           onChange(
             makeObjectForm(
-              "sex",
-              (e.target.value === "수컷" && "MALE") ||
-                (e.target.value === "암컷" && "FEMALE") ||
-                (e.target.value === "모름" && "UNKNOWN")
+              'sex',
+              (e.target.value === '수컷' && 'MALE') ||
+                (e.target.value === '암컷' && 'FEMALE') ||
+                (e.target.value === '모름' && 'UNKNOWN')
             )
           );
         }
@@ -87,9 +86,9 @@ const PetInformation = ({ margin, onChange, animalData }) => {
     if (isInputChange(e)) {
       if (isKindsInput(e)) {
         if (isEmpty(e)) {
-          onChange(makeObjectForm("animalKindName", null));
+          onChange(makeObjectForm('animalKindName', null));
         } else {
-          onChange(makeObjectForm("animalKindName", e.target.value));
+          onChange(makeObjectForm('animalKindName', e.target.value));
         }
         return;
       }
@@ -97,14 +96,14 @@ const PetInformation = ({ margin, onChange, animalData }) => {
       if (isAgeInput(e)) {
         if (isEmpty(e)) {
           setAge(null);
-          onChange(makeObjectForm("age", null));
+          onChange(makeObjectForm('age', null));
         } else {
           let age = Number(e.target.value);
           if (age >= 499) e.target.value = 499;
           if (age < 0) e.target.value = 0;
 
           setAge(Number(e.target.value));
-          onChange(makeObjectForm("age", Number(e.target.value)));
+          onChange(makeObjectForm('age', Number(e.target.value)));
         }
         return;
       }
@@ -114,24 +113,24 @@ const PetInformation = ({ margin, onChange, animalData }) => {
   const handleUnknownChecked = (e) => {
     let valueToSave = null;
 
-    if (e.target.id === "kinds-checkbox") {
+    if (e.target.id === 'kinds-checkbox') {
       setIsAnimalUnknown(!isAnimalUnknown);
-      valueToSave = (e.target.checked && "UNKNOWN") || animalKindName || null;
-      onChange(makeObjectForm("animalKindName", valueToSave));
+      valueToSave = (e.target.checked && 'UNKNOWN') || animalKindName || null;
+      onChange(makeObjectForm('animalKindName', valueToSave));
       return;
     }
 
-    if (e.target.id === "age-checkbox") {
+    if (e.target.id === 'age-checkbox') {
       setIsAgeUnknown(!isAgeUnknown);
       valueToSave = (e.target.checked && -1) || age || null;
-      onChange(makeObjectForm("age", valueToSave));
+      onChange(makeObjectForm('age', valueToSave));
       return;
     }
 
-    if (e.target.id === "sex-checkbox") {
+    if (e.target.id === 'sex-checkbox') {
       setIsSexUnknown(!isSexUnknown);
-      valueToSave = (e.target.checked && "UNKNOWN") || sex || null;
-      onChange(makeObjectForm("sex", valueToSave));
+      valueToSave = (e.target.checked && 'UNKNOWN') || sex || null;
+      onChange(makeObjectForm('sex', valueToSave));
       return;
     }
   };
@@ -145,12 +144,12 @@ const PetInformation = ({ margin, onChange, animalData }) => {
         <SelectionBox
           id="animal"
           onChange={handleChange}
-          options={["개", "고양이", "기타"]}
+          options={['개', '고양이', '기타']}
           defaultOption="동물"
           required
         />
-        {((animal === "동물" || animal === null) && <></>) ||
-          (animal === "기타" && (
+        {((animal === '동물' || animal === null) && <></>) ||
+          (animal === '기타' && (
             <>
               <Input
                 id="kinds-input"
@@ -227,19 +226,18 @@ const Wrapper = styled.div`
 PetInformation.propTypes = {
   onChange: PropTypes.func,
   animalData: PropTypes.array,
-  margin: PropTypes.string,
+  margin: PropTypes.string
 };
 
 export default PetInformation;
 
-const isSelectChange = (e) => e.target.tagName === "SELECT";
-const isInputChange = (e) => e.target.tagName === "INPUT";
-const isKindsInput = (e) => e.target.id === "kinds-input";
-const isAgeInput = (e) => e.target.id === "age-input";
-const isAnimalSelection = (e) => e.target[0].textContent === "동물";
-const isKindsSelection = (e) => e.target[0].textContent === "품종";
-const isSexSelection = (e) => e.target[0].textContent === "성별";
+const isSelectChange = (e) => e.target.tagName === 'SELECT';
+const isInputChange = (e) => e.target.tagName === 'INPUT';
+const isKindsInput = (e) => e.target.id === 'kinds-input';
+const isAgeInput = (e) => e.target.id === 'age-input';
+const isAnimalSelection = (e) => e.target[0].textContent === '동물';
+const isKindsSelection = (e) => e.target[0].textContent === '품종';
+const isSexSelection = (e) => e.target[0].textContent === '성별';
 const makeObjectForm = (name, value) => ({ target: { name, value } });
-const isDefalutOptionSelected = (e) =>
-  e.target[0].textContent === e.target.value;
+const isDefalutOptionSelected = (e) => e.target[0].textContent === e.target.value;
 const isEmpty = (e) => e.target.value.length === 0;
