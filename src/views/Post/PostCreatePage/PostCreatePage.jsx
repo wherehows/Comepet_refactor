@@ -128,11 +128,13 @@ export default PostCreatePage;
 const makeFormDataAppendingImages = (images) => {
   const formData = new FormData();
 
-  for (let i = 0; i < images?.length; i++) {
-    formData.append('images', images[i]);
+  if (!images) {
+    return formData.append('images', []);
   }
 
-  if (!images) formData.append('images', []);
+  for (let i = 0; i < images.length; i++) {
+    formData.append('images', images[i]);
+  }
 
   return formData;
 };
