@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/Button';
 import {
   Status,
@@ -20,6 +21,8 @@ const MARGIN_BETWEEN_CATEGORY = '5rem 0 0 0';
 
 const PostCreatePage = () => {
   const [isErrorExist, setIsErrorExist] = useState(false);
+
+  const navigate = useNavigate();
 
   const { values, handleChange, handleSubmit } = useForm({
     initialValues: {
@@ -92,19 +95,14 @@ const PostCreatePage = () => {
         <PetPhoto margin={MARGIN_BETWEEN_CATEGORY} onFillIn={handleChange} />
         <Content margin={MARGIN_BETWEEN_CATEGORY} onFillIn={handleChange} />
         <ButtonWrapper margin={MARGIN_BETWEEN_CATEGORY}>
-          <Button
-            width="60%"
-            margin="5% auto 0 auto"
-            bgColor="normalOrange"
-            onClick={handleSubmit}
-            type="button">
+          <Button width="60%" margin="5% auto 0 auto" bgColor="normalOrange">
             작성하기
           </Button>
           <Button
             width="60%"
             margin="5% auto 0 auto"
             bgColor="brand"
-            onClick={handleSubmit}
+            onClick={() => navigate(-1)}
             type="button">
             취소하기
           </Button>
