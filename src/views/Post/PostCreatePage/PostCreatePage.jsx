@@ -16,6 +16,8 @@ import ErrorModal from './ErrorModal/ErrorModal';
 import useForm from '@/hooks/useForm';
 import { placeData, animalData } from '@/data/data';
 
+const MARGIN_BETWEEN_CATEGORY = '5rem 0 0 0';
+
 const PostCreatePage = () => {
   const [isErrorExist, setIsErrorExist] = useState(false);
 
@@ -77,19 +79,23 @@ const PostCreatePage = () => {
       {/* <ShortHeader /> */}
       <Form onsumbit={handleSubmit}>
         <Status onChange={handleChange} />
-        <Date margin="5rem 0 0 0" onChange={handleChange} />
-        <Place margin="5rem 0 0 0" onChange={handleChange} placeData={placeData.cities} />
-        <Contact margin="5rem 0 0 0" onChange={handleChange} />
+        <Date margin={MARGIN_BETWEEN_CATEGORY} onChange={handleChange} />
+        <Place
+          margin={MARGIN_BETWEEN_CATEGORY}
+          onChange={handleChange}
+          placeData={placeData.cities}
+        />
+        <Contact margin={MARGIN_BETWEEN_CATEGORY} onChange={handleChange} />
         <PetInformation
-          margin="5rem 0 0 0"
+          margin={MARGIN_BETWEEN_CATEGORY}
           animalData={animalData.animals}
           onChange={handleChange}
         />
-        <ChipInformation margin="5rem 0 0 0" onChange={handleChange} />
-        <HashTag margin="5rem 0 0 0" onChange={handleChange} />
-        <PetPhoto margin="5rem 0 0 0" onChange={handleChange} />
-        <Content margin="5rem 0 0 0" onChange={handleChange} />
-        <ButtonWrapper margin="5rem 0 0 0">
+        <ChipInformation margin={MARGIN_BETWEEN_CATEGORY} onChange={handleChange} />
+        <HashTag margin={MARGIN_BETWEEN_CATEGORY} onChange={handleChange} />
+        <PetPhoto margin={MARGIN_BETWEEN_CATEGORY} onChange={handleChange} />
+        <Content margin={MARGIN_BETWEEN_CATEGORY} onChange={handleChange} />
+        <ButtonWrapper margin={MARGIN_BETWEEN_CATEGORY}>
           <Button
             width="60%"
             margin="5% auto 0 auto"
