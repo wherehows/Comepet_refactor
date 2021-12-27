@@ -5,7 +5,7 @@ import LineBreakWrapper from '../Common/LineBreakWrapper';
 import { Label } from '@/components/Label';
 import { SelectionBox } from '@/components/SelectionBox';
 
-const Date = ({ margin, onChange }) => {
+const Date = ({ margin, onFillIn }) => {
   const [selectedYear, setSelectedYear] = useState(null);
   const [selectedMonth, setSelectedMonth] = useState(null);
   const [selectedDay, setSelectedDay] = useState(null);
@@ -41,7 +41,7 @@ const Date = ({ margin, onChange }) => {
       selectedDay !== null &&
       selectedDay !== undefined
     ) {
-      onChange({
+      onFillIn({
         target: {
           name: 'date',
           value: `${selectedYear}-${makeYYYYMMDDForm(selectedMonth)}-${makeYYYYMMDDForm(
@@ -50,7 +50,7 @@ const Date = ({ margin, onChange }) => {
         }
       });
     } else {
-      onChange({
+      onFillIn({
         target: { name: 'date', value: null }
       });
     }
@@ -95,7 +95,7 @@ const Wrapper = styled.div`
 `;
 
 Date.propTypes = {
-  onChange: PropTypes.func.isRequired,
+  onFillIn: PropTypes.func.isRequired,
   margin: PropTypes.string
 };
 

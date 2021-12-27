@@ -6,24 +6,24 @@ import { Label } from '@/components/Label';
 import { SelectionBox } from '@/components/SelectionBox';
 import { Input } from '@/components/Input';
 
-const Place = ({ margin, placeData, onChange }) => {
+const Place = ({ margin, places, onFillIn }) => {
   const [selectedCity, setSelectedCity] = useState(null);
   const townRef = useRef(null);
 
   const cities = useMemo(() => {
-    const res = placeData?.map(({ name }) => name);
+    const res = places?.map(({ name }) => name);
     return res;
-  }, [placeData]);
+  }, [places]);
 
   const towns = useMemo(() => {
-    const res = placeData?.find(({ name }) => name === selectedCity);
+    const res = places?.find(({ name }) => name === selectedCity);
     return res?.towns.map(({ name }) => name);
-  }, [selectedCity, placeData]);
+  }, [selectedCity, places]);
 
   const handleChange = (e) => {
     if (isCitySelection(e)) {
       if (isDefaultOptionSelected(e)) {
-        onChange({
+        onFillIn({
           target: [
             { name: 'cityId', value: null },
             { name: 'townId', value: null }
@@ -32,8 +32,8 @@ const Place = ({ margin, placeData, onChange }) => {
         setSelectedCity(null);
       } else if (!isDefaultOptionSelected(e)) {
         townRef.current[0].selected = true;
-        const selectedCityId = placeData.find(({ name }) => name === e.target.value).id;
-        onChange({
+        const selectedCityId = places.find(({ name }) => name === e.target.value).id;
+        onFillIn({
           target: [
             { name: 'cityId', value: selectedCityId },
             { name: 'townId', value: null }
@@ -45,11 +45,11 @@ const Place = ({ margin, placeData, onChange }) => {
     }
     if (isTownSelection(e)) {
       if (isDefaultOptionSelected(e)) {
-        onChange({ target: { name: 'townId', value: null } });
+        onFillIn({ target: { name: 'townId', value: null } });
       } else if (!isDefaultOptionSelected(e)) {
-        const towns = placeData.find(({ name }) => name === selectedCity).towns;
+        const towns = places.find(({ name }) => name === selectedCity).towns;
         const selectedTownId = towns.find(({ name }) => name === e.target.value).id;
-        onChange({ target: { name: 'townId', value: selectedTownId } });
+        onFillIn({ target: { name: 'townId', value: selectedTownId } });
       }
       return;
     }
@@ -57,9 +57,9 @@ const Place = ({ margin, placeData, onChange }) => {
 
   const handleInput = (e) => {
     if (e.target.value.length > 0) {
-      onChange({ target: { name: 'detailAddress', value: e.target.value } });
+      onFillIn({ target: { name: 'detailAddress', value: e.target.value } });
     } else {
-      onChange({ target: { name: 'detailAddress', value: null } });
+      onFillIn({ target: { name: 'detailAddress', value: null } });
     }
   };
 
@@ -101,8 +101,8 @@ const Wrapper = styled.div`
 `;
 
 Place.propTypes = {
-  onChange: PropTypes.func,
-  placeData: PropTypes.array,
+  onFillIn: PropTypes.func,
+  places: PropTypes.array,
   margin: PropTypes.string
 };
 

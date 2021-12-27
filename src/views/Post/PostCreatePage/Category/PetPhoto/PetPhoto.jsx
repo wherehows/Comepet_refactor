@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Slider } from '@/components/Slider';
 import { Button } from '@/components/Button';
 
-const PetPhoto = ({ margin, onChange }) => {
+const PetPhoto = ({ margin, onFillIn }) => {
   const [files, setFiles] = useState([]);
   const [isErrorOccurred, setIsErrorOccurred] = useState(false);
 
@@ -19,7 +19,7 @@ const PetPhoto = ({ margin, onChange }) => {
       const nextFiles = [...e.target.files];
       setFiles(makeDataFormForSlider(nextFiles));
       setIsErrorOccurred(false);
-      onChange({ target: { name: 'images', value: e.target.files } });
+      onFillIn({ target: { name: 'images', value: e.target.files } });
       return;
     }
 
@@ -60,7 +60,7 @@ const Input = styled.input`
 `;
 
 PetPhoto.propTypes = {
-  onChange: PropTypes.func,
+  onFillIn: PropTypes.func,
   margin: PropTypes.string
 };
 

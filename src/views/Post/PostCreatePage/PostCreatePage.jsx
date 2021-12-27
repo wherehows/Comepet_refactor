@@ -78,23 +78,19 @@ const PostCreatePage = () => {
     <Wrapper>
       {/* <ShortHeader /> */}
       <Form onsumbit={handleSubmit}>
-        <Status onChange={handleChange} />
-        <Date margin={MARGIN_BETWEEN_CATEGORY} onChange={handleChange} />
-        <Place
-          margin={MARGIN_BETWEEN_CATEGORY}
-          onChange={handleChange}
-          placeData={placeData.cities}
-        />
-        <Contact margin={MARGIN_BETWEEN_CATEGORY} onChange={handleChange} />
+        <Status onFillIn={handleChange} />
+        <Date margin={MARGIN_BETWEEN_CATEGORY} onFillIn={handleChange} />
+        <Place margin={MARGIN_BETWEEN_CATEGORY} onFillIn={handleChange} places={placeData.cities} />
+        <Contact margin={MARGIN_BETWEEN_CATEGORY} onFillIn={handleChange} />
         <PetInformation
           margin={MARGIN_BETWEEN_CATEGORY}
-          animalData={animalData.animals}
-          onChange={handleChange}
+          animals={animalData.animals}
+          onFillIn={handleChange}
         />
-        <ChipInformation margin={MARGIN_BETWEEN_CATEGORY} onChange={handleChange} />
-        <HashTag margin={MARGIN_BETWEEN_CATEGORY} onChange={handleChange} />
-        <PetPhoto margin={MARGIN_BETWEEN_CATEGORY} onChange={handleChange} />
-        <Content margin={MARGIN_BETWEEN_CATEGORY} onChange={handleChange} />
+        <ChipInformation margin={MARGIN_BETWEEN_CATEGORY} onFillIn={handleChange} />
+        <HashTag margin={MARGIN_BETWEEN_CATEGORY} onFillIn={handleChange} />
+        <PetPhoto margin={MARGIN_BETWEEN_CATEGORY} onFillIn={handleChange} />
+        <Content margin={MARGIN_BETWEEN_CATEGORY} onFillIn={handleChange} />
         <ButtonWrapper margin={MARGIN_BETWEEN_CATEGORY}>
           <Button
             width="60%"

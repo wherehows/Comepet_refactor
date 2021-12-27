@@ -8,7 +8,7 @@ import { Input } from '@/components/Input';
 import { CheckBox } from '@/components/CheckBox';
 import { GENDER } from '@/utils/constants';
 
-const PetInformation = ({ margin, onChange, animalData }) => {
+const PetInformation = ({ margin, onFillIn, animals }) => {
   const [animal, setAnimal] = useState(null);
   const [animalKindName, setAnimalKindName] = useState(null);
   const [age, setAge] = useState(null);
@@ -20,19 +20,19 @@ const PetInformation = ({ margin, onChange, animalData }) => {
   const kindsCheckBoxRef = useRef(null);
 
   const animalList = useMemo(() => {
-    const targetAnimal = animalData?.find(({ name }) => name === animal);
+    const targetAnimal = animals?.find(({ name }) => name === animal);
     const kinds = targetAnimal?.kinds;
     const res = kinds?.map(({ name }) => name);
     return res;
-  }, [animal, animalData]);
+  }, [animal, animals]);
 
   useEffect(() => {
     if (animal !== null && animal !== '동물') {
-      const targetObject = animalData?.find(({ name }) => name === animal);
+      const targetObject = animals?.find(({ name }) => name === animal);
       const targetId = targetObject.id;
-      onChange({ target: { name: 'animalId', value: targetId } });
+      onFillIn({ target: { name: 'animalId', value: targetId } });
     } else if (animal === null) {
-      onChange({ target: { name: 'animalId', value: null } });
+      onFillIn({ target: { name: 'animalId', value: null } });
     }
   }, [animal]);
 
@@ -41,26 +41,26 @@ const PetInformation = ({ margin, onChange, animalData }) => {
       if (isAnimalSelection(e)) {
         if (isDefalutOptionSelected(e)) {
           setAnimal(null);
-          onChange(makeObjectForm('animalId', null));
+          onFillIn(makeObjectForm('animalId', null));
         } else {
           setAnimal(e.target.value);
-          onChange(makeObjectForm('animalId', e.target.value));
+          onFillIn(makeObjectForm('animalId', e.target.value));
         }
 
         kindsCheckBoxRef.current && (kindsCheckBoxRef.current.checked = false);
         kindsSelectionBoxRef.current && (kindsSelectionBoxRef.current[0].selected = 'selected');
         setIsAnimalUnknown(false);
-        onChange(makeObjectForm('animalKindName', null));
+        onFillIn(makeObjectForm('animalKindName', null));
         return;
       }
 
       if (isKindsSelection(e)) {
         if (isDefalutOptionSelected(e)) {
           setAnimalKindName(null);
-          onChange(makeObjectForm('animalKindName', null));
+          onFillIn(makeObjectForm('animalKindName', null));
         } else {
           setAnimalKindName(e.target.value);
-          onChange(makeObjectForm('animalKindName', e.target.value));
+          onFillIn(makeObjectForm('animalKindName', e.target.value));
         }
         return;
       }
@@ -68,10 +68,10 @@ const PetInformation = ({ margin, onChange, animalData }) => {
       if (isSexSelection(e)) {
         if (isDefalutOptionSelected(e)) {
           setSex(null);
-          onChange(makeObjectForm('sex', null));
+          onFillIn(makeObjectForm('sex', null));
         } else {
           setSex(e.target.value);
-          onChange(
+          onFillIn(
             makeObjectForm(
               'sex',
               (e.target.value === '수컷' && 'MALE') ||
@@ -86,9 +86,9 @@ const PetInformation = ({ margin, onChange, animalData }) => {
     if (isInputChange(e)) {
       if (isKindsInput(e)) {
         if (isEmpty(e)) {
-          onChange(makeObjectForm('animalKindName', null));
+          onFillIn(makeObjectForm('animalKindName', null));
         } else {
-          onChange(makeObjectForm('animalKindName', e.target.value));
+          onFillIn(makeObjectForm('animalKindName', e.target.value));
         }
         return;
       }
@@ -96,14 +96,14 @@ const PetInformation = ({ margin, onChange, animalData }) => {
       if (isAgeInput(e)) {
         if (isEmpty(e)) {
           setAge(null);
-          onChange(makeObjectForm('age', null));
+          onFillIn(makeObjectForm('age', null));
         } else {
           let age = Number(e.target.value);
           if (age >= 499) e.target.value = 499;
           if (age < 0) e.target.value = 0;
 
           setAge(Number(e.target.value));
-          onChange(makeObjectForm('age', Number(e.target.value)));
+          onFillIn(makeObjectForm('age', Number(e.target.value)));
         }
         return;
       }
@@ -116,21 +116,21 @@ const PetInformation = ({ margin, onChange, animalData }) => {
     if (e.target.id === 'kinds-checkbox') {
       setIsAnimalUnknown(!isAnimalUnknown);
       valueToSave = (e.target.checked && 'UNKNOWN') || animalKindName || null;
-      onChange(makeObjectForm('animalKindName', valueToSave));
+      onFillIn(makeObjectForm('animalKindName', valueToSave));
       return;
     }
 
     if (e.target.id === 'age-checkbox') {
       setIsAgeUnknown(!isAgeUnknown);
       valueToSave = (e.target.checked && -1) || age || null;
-      onChange(makeObjectForm('age', valueToSave));
+      onFillIn(makeObjectForm('age', valueToSave));
       return;
     }
 
     if (e.target.id === 'sex-checkbox') {
       setIsSexUnknown(!isSexUnknown);
       valueToSave = (e.target.checked && 'UNKNOWN') || sex || null;
-      onChange(makeObjectForm('sex', valueToSave));
+      onFillIn(makeObjectForm('sex', valueToSave));
       return;
     }
   };
@@ -224,8 +224,8 @@ const Wrapper = styled.div`
 `;
 
 PetInformation.propTypes = {
-  onChange: PropTypes.func,
-  animalData: PropTypes.array,
+  onFillIn: PropTypes.func,
+  animals: PropTypes.array,
   margin: PropTypes.string
 };
 

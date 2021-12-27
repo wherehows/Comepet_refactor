@@ -4,12 +4,12 @@ import styled from '@emotion/styled';
 import { Label } from '@/components/Label';
 import { Input } from '@/components/Input';
 
-const Contact = ({ margin, onChange }) => {
+const Contact = ({ margin, onFillIn }) => {
   const handleInput = (e) => {
     if (e.target.value.length > 0) {
-      onChange({ target: { name: 'telNumber', value: e.target.value } });
+      onFillIn({ target: { name: 'telNumber', value: e.target.value } });
     } else if (e.target.value.length === 0) {
-      onChange({ target: { name: 'telNumber', value: null } });
+      onFillIn({ target: { name: 'telNumber', value: null } });
     }
   };
 
@@ -35,7 +35,7 @@ const Wrapper = styled.div`
 
 Contact.propTypes = {
   margin: PropTypes.string,
-  onChange: PropTypes.func
+  onFillIn: PropTypes.func
 };
 
 export default Contact;
