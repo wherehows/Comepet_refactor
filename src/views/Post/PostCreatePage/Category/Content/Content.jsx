@@ -3,14 +3,14 @@ import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import { Label } from '@/components/Label';
 
-const Content = ({ margin, onChange }) => {
+const Content = ({ margin, onFillIn }) => {
   const handleInput = (e) => {
     const pureText = e.target.textContent;
     const textWithTags = e.target.innerHTML;
     if (pureText.length !== 0) {
-      onChange({ target: { name: 'content', value: textWithTags } });
+      onFillIn({ target: { name: 'content', value: textWithTags } });
     } else if (pureText.length === 0) {
-      onChange({ target: { name: 'content', value: null } });
+      onFillIn({ target: { name: 'content', value: null } });
     }
   };
 
@@ -66,7 +66,7 @@ const ContentEditor = styled.div`
 
 Content.propTypes = {
   margin: PropTypes.string,
-  onChange: PropTypes.func
+  onFillIn: PropTypes.func
 };
 
 export default Content;

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/Button';
 import {
   Status,
@@ -16,8 +17,12 @@ import ErrorModal from './ErrorModal/ErrorModal';
 import useForm from '@/hooks/useForm';
 import { placeData, animalData } from '@/data/data';
 
+const MARGIN_BETWEEN_CATEGORY = '5rem 0 0 0';
+
 const PostCreatePage = () => {
   const [isErrorExist, setIsErrorExist] = useState(false);
+
+  const navigate = useNavigate();
 
   const { values, handleChange, handleSubmit } = useForm({
     initialValues: {
@@ -76,33 +81,28 @@ const PostCreatePage = () => {
     <Wrapper>
       {/* <ShortHeader /> */}
       <Form onsumbit={handleSubmit}>
-        <Status onChange={handleChange} />
-        <Date margin="5rem 0 0 0" onChange={handleChange} />
-        <Place margin="5rem 0 0 0" onChange={handleChange} placeData={placeData.cities} />
-        <Contact margin="5rem 0 0 0" onChange={handleChange} />
+        <Status onFillIn={handleChange} />
+        <Date margin={MARGIN_BETWEEN_CATEGORY} onFillIn={handleChange} />
+        <Place margin={MARGIN_BETWEEN_CATEGORY} onFillIn={handleChange} places={placeData.cities} />
+        <Contact margin={MARGIN_BETWEEN_CATEGORY} onFillIn={handleChange} />
         <PetInformation
-          margin="5rem 0 0 0"
-          animalData={animalData.animals}
-          onChange={handleChange}
+          margin={MARGIN_BETWEEN_CATEGORY}
+          animals={animalData.animals}
+          onFillIn={handleChange}
         />
-        <ChipInformation margin="5rem 0 0 0" onChange={handleChange} />
-        <HashTag margin="5rem 0 0 0" onChange={handleChange} />
-        <PetPhoto margin="5rem 0 0 0" onChange={handleChange} />
-        <Content margin="5rem 0 0 0" onChange={handleChange} />
-        <ButtonWrapper margin="5rem 0 0 0">
-          <Button
-            width="60%"
-            margin="5% auto 0 auto"
-            bgColor="normalOrange"
-            onClick={handleSubmit}
-            type="button">
+        <ChipInformation margin={MARGIN_BETWEEN_CATEGORY} onFillIn={handleChange} />
+        <HashTag margin={MARGIN_BETWEEN_CATEGORY} onFillIn={handleChange} />
+        <PetPhoto margin={MARGIN_BETWEEN_CATEGORY} onFillIn={handleChange} />
+        <Content margin={MARGIN_BETWEEN_CATEGORY} onFillIn={handleChange} />
+        <ButtonWrapper margin={MARGIN_BETWEEN_CATEGORY}>
+          <Button width="60%" margin="5% auto 0 auto" bgColor="normalOrange">
             작성하기
           </Button>
           <Button
             width="60%"
             margin="5% auto 0 auto"
             bgColor="brand"
-            onClick={handleSubmit}
+            onClick={() => navigate(-1)}
             type="button">
             취소하기
           </Button>
@@ -128,11 +128,13 @@ export default PostCreatePage;
 const makeFormDataAppendingImages = (images) => {
   const formData = new FormData();
 
-  for (let i = 0; i < images?.length; i++) {
-    formData.append('images', images[i]);
+  if (!images) {
+    return formData.append('images', []);
   }
 
-  if (!images) formData.append('images', []);
+  for (let i = 0; i < images.length; i++) {
+    formData.append('images', images[i]);
+  }
 
   return formData;
 };
