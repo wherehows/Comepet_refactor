@@ -4,12 +4,12 @@ import styled from '@emotion/styled';
 import { Label } from '@/components/Label';
 import { Input } from '@/components/Input';
 
-const ChipInformation = ({ margin, onChange }) => {
+const ChipInformation = ({ margin, onFillIn }) => {
   const handleChange = (e) => {
     if (e.target.value.length > 0) {
-      onChange({ target: { name: 'chipNumber', value: e.target.value } });
+      onFillIn({ target: { name: 'chipNumber', value: e.target.value } });
     } else if (e.target.value.length === 0) {
-      onChange({ target: { name: 'chipNumber', value: null } });
+      onFillIn({ target: { name: 'chipNumber', value: null } });
     }
   };
 
@@ -34,7 +34,7 @@ const Wrapper = styled.div`
 
 ChipInformation.propTypes = {
   margin: PropTypes.string,
-  onChange: PropTypes.func
+  onFillIn: PropTypes.func
 };
 
 export default ChipInformation;

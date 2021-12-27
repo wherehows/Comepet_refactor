@@ -12,12 +12,12 @@ const STATUS = Object.freeze({
   완료: 'COMPLETION'
 });
 
-const Status = ({ onChange }) => {
+const Status = ({ onFillIn }) => {
   const handleChange = (e) => {
     if (!isDefalutOptionSelected(e)) {
-      onChange({ target: { name: 'status', value: STATUS[e.target.value] } });
+      onFillIn({ target: { name: 'status', value: STATUS[e.target.value] } });
     } else {
-      onChange({ target: { name: 'status', value: null } });
+      onFillIn({ target: { name: 'status', value: null } });
     }
   };
 
@@ -42,7 +42,7 @@ const Status = ({ onChange }) => {
 const Wrapper = styled.div``;
 
 Status.propTypes = {
-  onChange: PropTypes.func
+  onFillIn: PropTypes.func
 };
 
 export default Status;
