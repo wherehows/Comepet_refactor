@@ -80,7 +80,7 @@ const PostCreatePage = () => {
   return (
     <Wrapper>
       {/* <ShortHeader /> */}
-      <Form onsumbit={handleSubmit}>
+      <Form onSubmit={handleSubmit}>
         <Status onFillIn={handleChange} />
         <Date margin={MARGIN_BETWEEN_CATEGORY} onFillIn={handleChange} />
         <Place margin={MARGIN_BETWEEN_CATEGORY} onFillIn={handleChange} places={placeData.cities} />
