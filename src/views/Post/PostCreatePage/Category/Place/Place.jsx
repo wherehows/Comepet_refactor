@@ -21,6 +21,15 @@ const Place = ({ margin, places, onFillIn }) => {
   }, [selectedCity, places]);
 
   const handleChange = (e) => {
+    if (isDetailAddressEntered(e)) {
+      if (e.target.value.length > 0) {
+        onFillIn({ target: { name: 'detailAddress', value: e.target.value } });
+      } else {
+        onFillIn({ target: { name: 'detailAddress', value: null } });
+      }
+      return;
+    }
+
     if (isCitySelection(e)) {
       if (isDefaultOptionSelected(e)) {
         onFillIn({
@@ -55,42 +64,22 @@ const Place = ({ margin, places, onFillIn }) => {
     }
   };
 
-  const handleInput = (e) => {
-    if (e.target.value.length > 0) {
-      onFillIn({ target: { name: 'detailAddress', value: e.target.value } });
-    } else {
-      onFillIn({ target: { name: 'detailAddress', value: null } });
-    }
-  };
-
   return (
-    <Wrapper margin={margin}>
+    <Wrapper margin={margin} onChange={handleChange}>
       <Label forHtml="status" bgColor="brand">
         장소
       </Label>
       <LineBreakWrapper margin="1.8rem 0 0 0">
-        <SelectionBox
-          id="status"
-          options={cities || []}
-          defaultOption="시/도"
-          required={true}
-          onChange={handleChange}
-        />
+        <SelectionBox id="status" options={cities || []} defaultOption="시/도" required={true} />
         <SelectionBox
           id="status"
           options={towns || []}
           defaultOption="시/군/구"
           required={true}
           margin="0 0 0 2rem"
-          onChange={handleChange}
           propRef={townRef}
         />
-        <Input
-          placeholder="추가적인 정보를 적어주세요"
-          onChange={handleInput}
-          margin="1.8rem 0 0 0"
-          maxLength="255"
-        />
+        <Input placeholder="추가적인 정보를 적어주세요" margin="1.8rem 0 0 0" maxLength="255" />
       </LineBreakWrapper>
     </Wrapper>
   );
@@ -108,6 +97,7 @@ Place.propTypes = {
 
 export default Place;
 
+const isDetailAddressEntered = (e) => e.target.tagName === 'INPUT';
 const isDefaultOptionSelected = (e) => e.target[0].textContent === e.target.value;
 const isCitySelection = (e) => e.target[0].textContent === '시/도';
 const isTownSelection = (e) => e.target[0].textContent === '시/군/구';

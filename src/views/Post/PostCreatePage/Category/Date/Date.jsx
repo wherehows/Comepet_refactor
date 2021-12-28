@@ -57,21 +57,14 @@ const Date = ({ margin, onFillIn }) => {
   }, [selectedYear, selectedMonth, selectedDay]);
 
   return (
-    <Wrapper margin={margin}>
+    <Wrapper margin={margin} onChange={handleChange}>
       <Label forHtml="year" bgColor="brand">
         날짜
       </Label>
       <LineBreakWrapper margin="1.8rem 0 0 0">
-        <SelectionBox
-          id="year"
-          onChange={handleChange}
-          options={getRangeOfYear()}
-          defaultOption="년"
-          required={true}
-        />
+        <SelectionBox id="year" options={getRangeOfYear()} defaultOption="년" required={true} />
         <SelectionBox
           id="month"
-          onChange={handleChange}
           options={getRangeOfMonth(selectedYear)}
           defaultOption="월"
           required={true}
@@ -79,7 +72,6 @@ const Date = ({ margin, onFillIn }) => {
         />
         <SelectionBox
           id="day"
-          onChange={handleChange}
           options={getRangeOfDay(selectedMonth, selectedYear)}
           defaultOption="일"
           required={true}

@@ -108,42 +108,40 @@ const PetInformation = ({ margin, onFillIn, animals }) => {
         return;
       }
     }
-  };
+    if (isCheckBoxChecked(e)) {
+      let valueToSave = null;
 
-  const handleUnknownChecked = (e) => {
-    let valueToSave = null;
+      if (e.target.id === 'kinds-checkbox') {
+        setIsAnimalUnknown(!isAnimalUnknown);
+        valueToSave = (e.target.checked && 'UNKNOWN') || animalKindName || null;
+        onFillIn(makeObjectForm('animalKindName', valueToSave));
+        return;
+      }
 
-    if (e.target.id === 'kinds-checkbox') {
-      setIsAnimalUnknown(!isAnimalUnknown);
-      valueToSave = (e.target.checked && 'UNKNOWN') || animalKindName || null;
-      onFillIn(makeObjectForm('animalKindName', valueToSave));
-      return;
-    }
+      if (e.target.id === 'age-checkbox') {
+        setIsAgeUnknown(!isAgeUnknown);
+        valueToSave = (e.target.checked && -1) || age || null;
+        onFillIn(makeObjectForm('age', valueToSave));
+        return;
+      }
 
-    if (e.target.id === 'age-checkbox') {
-      setIsAgeUnknown(!isAgeUnknown);
-      valueToSave = (e.target.checked && -1) || age || null;
-      onFillIn(makeObjectForm('age', valueToSave));
-      return;
-    }
-
-    if (e.target.id === 'sex-checkbox') {
-      setIsSexUnknown(!isSexUnknown);
-      valueToSave = (e.target.checked && 'UNKNOWN') || sex || null;
-      onFillIn(makeObjectForm('sex', valueToSave));
-      return;
+      if (e.target.id === 'sex-checkbox') {
+        setIsSexUnknown(!isSexUnknown);
+        valueToSave = (e.target.checked && 'UNKNOWN') || sex || null;
+        onFillIn(makeObjectForm('sex', valueToSave));
+        return;
+      }
     }
   };
 
   return (
-    <Wrapper margin={margin}>
+    <Wrapper margin={margin} onChange={handleChange}>
       <Label forHtml="animal" bgColor="brand">
         동물 정보
       </Label>
       <LineBreakWrapper margin="1.8rem 0 0 0">
         <SelectionBox
           id="animal"
-          onChange={handleChange}
           options={['개', '고양이', '기타']}
           defaultOption="동물"
           required
@@ -153,7 +151,6 @@ const PetInformation = ({ margin, onFillIn, animals }) => {
             <>
               <Input
                 id="kinds-input"
-                onChange={handleChange}
                 placeholder="동물명 혹은 품종"
                 width="50%"
                 margin="0 0 0 1.8rem"
@@ -164,7 +161,6 @@ const PetInformation = ({ margin, onFillIn, animals }) => {
               <CheckBox
                 id="kinds-checkbox"
                 propRef={kindsCheckBoxRef}
-                onChange={handleUnknownChecked}
                 margin="0 0 0 1.2rem"
                 fontSize="1.4rem"
               />
@@ -172,7 +168,6 @@ const PetInformation = ({ margin, onFillIn, animals }) => {
           )) || (
             <LineBreakWrapper>
               <SelectionBox
-                onChange={handleChange}
                 options={animalList || []}
                 defaultOption="품종"
                 margin="1.6rem 0 0 0"
@@ -185,7 +180,6 @@ const PetInformation = ({ margin, onFillIn, animals }) => {
         <LineBreakWrapper>
           <Input
             id="age-input"
-            onChange={handleChange}
             width="8rem"
             placeholder="나이"
             type="number"
@@ -193,26 +187,15 @@ const PetInformation = ({ margin, onFillIn, animals }) => {
             disabled={isAgeUnknown}
             required
           />
-          <CheckBox
-            onChange={handleUnknownChecked}
-            id="age-checkbox"
-            margin="0 0 0 1.6rem"
-            fontSize="1.4rem"
-          />
+          <CheckBox id="age-checkbox" margin="0 0 0 1.6rem" fontSize="1.4rem" />
           <SelectionBox
-            onChange={handleChange}
             options={Object.values(GENDER)}
             defaultOption="성별"
             required={true}
             margin="0 0 0 1.6rem"
             disabled={isSexUnknown}
           />
-          <CheckBox
-            onChange={handleUnknownChecked}
-            id="sex-checkbox"
-            margin="0 0 0 1.6rem"
-            fontSize="1.4rem"
-          />
+          <CheckBox id="sex-checkbox" margin="0 0 0 1.6rem" fontSize="1.4rem" />
         </LineBreakWrapper>
       </LineBreakWrapper>
     </Wrapper>
@@ -241,3 +224,4 @@ const isSexSelection = (e) => e.target[0].textContent === '성별';
 const makeObjectForm = (name, value) => ({ target: { name, value } });
 const isDefalutOptionSelected = (e) => e.target[0].textContent === e.target.value;
 const isEmpty = (e) => e.target.value.length === 0;
+const isCheckBoxChecked = (e) => e.target.type === 'checkbox';
