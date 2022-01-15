@@ -5,54 +5,46 @@ import LineBreakWrapper from '../Common/LineBreakWrapper';
 import { Label } from '@/components/Label';
 import { SelectionBox } from '@/components/SelectionBox';
 
-const Date = ({ margin, onFillIn }) => {
+const Date = ({ margin, onFillIn, onLeaveBlank }) => {
   const [selectedYear, setSelectedYear] = useState(null);
   const [selectedMonth, setSelectedMonth] = useState(null);
   const [selectedDay, setSelectedDay] = useState(null);
 
   const handleChange = (e) => {
     if (isYearSelection(e)) {
-      isDefalutOptionSelected(e) ? setSelectedYear(null) : setSelectedYear(Number(e.target.value));
+      if (isDefaultOptionSelecetd(e)) {
+        setSelectedYear(null);
+        setSelectedMonth(null);
+        setSelectedDay(null);
+      } else {
+        setSelectedYear(Number(e.target.value));
+      }
       return;
     }
 
     if (isMonthSelection(e)) {
-      isDefalutOptionSelected(e)
-        ? setSelectedMonth(null)
-        : setSelectedMonth(Number(e.target.value));
+      if (isDefaultOptionSelecetd(e)) {
+        setSelectedMonth(null);
+        setSelectedDay(null);
+      } else {
+        setSelectedMonth(Number(e.target.value));
+      }
       return;
     }
 
     if (isDaySelection(e)) {
-      isDefalutOptionSelected(e) ? setSelectedDay(null) : setSelectedDay(Number(e.target.value));
+      isDefaultOptionSelecetd(e) ? setSelectedDay(null) : setSelectedDay(Number(e.target.value));
       return;
     }
   };
 
   useEffect(() => {
-    if (
-      !Number.isNaN(Number(selectedYear)) &&
-      selectedYear !== null &&
-      selectedYear !== undefined &&
-      !Number.isNaN(Number(selectedMonth)) &&
-      selectedMonth !== null &&
-      selectedMonth !== undefined &&
-      !Number.isNaN(Number(selectedDay)) &&
-      selectedDay !== null &&
-      selectedDay !== undefined
-    ) {
+    if (areAllOptionsSelected(selectedYear, selectedMonth, selectedDay)) {
       onFillIn({
-        target: {
-          name: 'date',
-          value: `${selectedYear}-${makeYYYYMMDDForm(selectedMonth)}-${makeYYYYMMDDForm(
-            selectedDay
-          )}`
-        }
+        date: `${selectedYear}-${makeYYYYMMDDForm(selectedMonth)}-${makeYYYYMMDDForm(selectedDay)}`
       });
     } else {
-      onFillIn({
-        target: { name: 'date', value: null }
-      });
+      onLeaveBlank('date');
     }
   }, [selectedYear, selectedMonth, selectedDay]);
 
@@ -88,6 +80,7 @@ const Wrapper = styled.div`
 
 Date.propTypes = {
   onFillIn: PropTypes.func.isRequired,
+  onLeaveBlank: PropTypes.func.isRequired,
   margin: PropTypes.string
 };
 
@@ -101,15 +94,18 @@ const getRangeOfYear = () => {
 };
 
 const getRangeOfMonth = (selectedYear) => {
+  let res = [];
   const thisYear = new window.Date().getFullYear();
+
+  if (!selectedYear) return res;
 
   if (selectedYear === thisYear) {
     const thisMonth = new window.Date().getMonth() + 1;
-    const res = new Array(thisMonth).fill(0).map((_, i) => i + 1);
-    return res;
+    res = new Array(thisMonth).fill(0).map((_, i) => i + 1);
+  } else {
+    res = new Array(12).fill(0).map((_, i) => i + 1);
   }
 
-  const res = new Array(12).fill(0).map((_, i) => i + 1);
   return res;
 };
 
@@ -156,12 +152,12 @@ const isLeapYear = (year) => {
     (year % 4 === 0 && year % 100 !== 0) || (year % 4 === 0 && year % 100 === 0 && year % 400 === 0)
   );
 };
-
 const isMonthThatHas31Days = (month) => [1, 3, 5, 7, 8, 10, 12].includes(month);
 const isMonthThatHas30Days = (month) => [4, 6, 9, 11].includes(month);
 const isYearSelection = (e) => e.target[0].textContent === '년';
 const isMonthSelection = (e) => e.target[0].textContent === '월';
 const isDaySelection = (e) => e.target[0].textContent === '일';
-const isDefalutOptionSelected = (e) => e.target[0].textContent === e.target.value;
+const isDefaultOptionSelecetd = (e) => e.target[0].textContent === e.target.value;
+const areAllOptionsSelected = (year, month, day) => year && month && day;
 const makeYYYYMMDDForm = (number) => (number < 10 && `0${number}`) || number;
 const February = 2;
