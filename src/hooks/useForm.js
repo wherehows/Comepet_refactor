@@ -5,19 +5,22 @@ const useForm = ({ initialValues, onSubmit, validate, handleNavigate, handleErro
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleChange = ({ target }) => {
-    let nextValues = { ...values };
-    const inputValue = target;
-
-    if (Array.isArray(inputValue)) {
-      for (let i = 0; i < inputValue.length; i++) {
-        const { name, value } = inputValue[i];
-        nextValues = { ...nextValues, [name]: value };
-      }
-      setValues(nextValues);
-    } else {
-      setValues({ ...values, [inputValue.name]: inputValue.value });
+  const handleFillIn = (param) => {
+    if (isEventObject(param)) {
+      setValues((values) => ({ ...values, [param.target.name]: param.target.value }));
+      return;
     }
+
+    setValues((values) => ({ ...values, ...param }));
+  };
+
+  const handleLeaveBlank = (param, blankValue) => {
+    if (isEventObject(param)) {
+      setValues((values) => ({ ...values, [param.target.name]: null }));
+      return;
+    }
+
+    setValues((values) => ({ ...values, [param]: blankValue || null }));
   };
 
   const handleSubmit = async (e) => {
@@ -41,10 +44,13 @@ const useForm = ({ initialValues, onSubmit, validate, handleNavigate, handleErro
     errors,
     isLoading,
     setIsLoading,
-    handleChange,
+    handleFillIn,
+    handleLeaveBlank,
     handleSubmit,
     handleNavigate
   };
 };
 
 export default useForm;
+
+const isEventObject = (e) => e.target;
