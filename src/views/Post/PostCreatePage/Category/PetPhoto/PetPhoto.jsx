@@ -19,7 +19,8 @@ const PetPhoto = ({ margin, onFillIn }) => {
       const nextFiles = [...e.target.files];
       setFiles(makeDataFormForSlider(nextFiles));
       setIsErrorOccurred(false);
-      onFillIn({ target: { name: 'images', value: e.target.files } });
+      // Todo: nextFiles를 넘겨줘도 되는지 확인하기
+      onFillIn({ images: e.target.files });
       return;
     }
 

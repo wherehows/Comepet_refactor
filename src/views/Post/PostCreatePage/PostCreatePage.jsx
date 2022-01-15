@@ -24,7 +24,7 @@ const PostCreatePage = () => {
 
   const navigate = useNavigate();
 
-  const { values, handleChange, handleSubmit } = useForm({
+  const { values, handleFillIn, handleLeaveBlank, handleSubmit } = useForm({
     initialValues: {
       status: null,
       date: null,
@@ -81,19 +81,45 @@ const PostCreatePage = () => {
     <Wrapper>
       {/* <ShortHeader /> */}
       <Form onSubmit={handleSubmit}>
-        <Status onFillIn={handleChange} />
-        <Date margin={MARGIN_BETWEEN_CATEGORY} onFillIn={handleChange} />
-        <Place margin={MARGIN_BETWEEN_CATEGORY} onFillIn={handleChange} places={placeData.cities} />
-        <Contact margin={MARGIN_BETWEEN_CATEGORY} onFillIn={handleChange} />
+        <Status onFillIn={handleFillIn} onLeaveBlank={handleLeaveBlank} />
+        <Date
+          margin={MARGIN_BETWEEN_CATEGORY}
+          onFillIn={handleFillIn}
+          onLeaveBlank={handleLeaveBlank}
+        />
+        <Place
+          margin={MARGIN_BETWEEN_CATEGORY}
+          onFillIn={handleFillIn}
+          onLeaveBlank={handleLeaveBlank}
+          places={placeData.cities}
+        />
+        <Contact
+          margin={MARGIN_BETWEEN_CATEGORY}
+          onFillIn={handleFillIn}
+          onLeaveBlank={handleLeaveBlank}
+        />
         <PetInformation
           margin={MARGIN_BETWEEN_CATEGORY}
           animals={animalData.animals}
-          onFillIn={handleChange}
+          onFillIn={handleFillIn}
+          onLeaveBlank={handleLeaveBlank}
         />
-        <ChipInformation margin={MARGIN_BETWEEN_CATEGORY} onFillIn={handleChange} />
-        <HashTag margin={MARGIN_BETWEEN_CATEGORY} onFillIn={handleChange} />
-        <PetPhoto margin={MARGIN_BETWEEN_CATEGORY} onFillIn={handleChange} />
-        <Content margin={MARGIN_BETWEEN_CATEGORY} onFillIn={handleChange} />
+        <ChipInformation
+          margin={MARGIN_BETWEEN_CATEGORY}
+          onFillIn={handleFillIn}
+          onLeaveBlank={handleLeaveBlank}
+        />
+        <HashTag
+          margin={MARGIN_BETWEEN_CATEGORY}
+          onFillIn={handleFillIn}
+          onLeaveBlank={handleLeaveBlank}
+        />
+        <PetPhoto margin={MARGIN_BETWEEN_CATEGORY} onFillIn={handleFillIn} />
+        <Content
+          margin={MARGIN_BETWEEN_CATEGORY}
+          onFillIn={handleFillIn}
+          onLeaveBlank={handleLeaveBlank}
+        />
         <ButtonWrapper margin={MARGIN_BETWEEN_CATEGORY}>
           <Button width="60%" margin="5% auto 0 auto" bgColor="normalOrange">
             작성하기

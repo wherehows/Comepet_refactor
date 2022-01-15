@@ -5,7 +5,7 @@ import { Label } from '@/components/Label';
 import { Input } from '@/components/Input';
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
 
-const HashTag = ({ margin, onFillIn }) => {
+const HashTag = ({ margin, onFillIn, onLeaveBlank }) => {
   const [tags, setTags] = useState([]);
   const [error, setErrors] = useState('');
   const [inputValue, setInputValue] = useState('');
@@ -38,14 +38,14 @@ const HashTag = ({ margin, onFillIn }) => {
     );
 
     setTags(nextTags);
-    onFillIn({ target: { name: 'tags', value: nextTags } });
+    isTagsEmpty(nextTags) ? onLeaveBlank('tags', []) : onFillIn({ tags: nextTags });
   };
 
   const handleAppendTag = (nextTag) => {
     const nextTags = [...tags];
     nextTags.push({ name: `${nextTag}` });
     setTags(nextTags);
-    onFillIn({ target: { name: 'tags', value: nextTags } });
+    onFillIn({ tags: nextTags });
   };
 
   return (
@@ -126,7 +126,10 @@ const StyledCancelRoundedIcon = styled(CancelRoundedIcon)``;
 
 HashTag.propTypes = {
   margin: PropTypes.string,
-  onFillIn: PropTypes.func
+  onFillIn: PropTypes.func,
+  onLeaveBlank: PropTypes.func
 };
 
 export default HashTag;
+
+const isTagsEmpty = (array) => array.length === 0;

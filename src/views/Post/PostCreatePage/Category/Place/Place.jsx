@@ -6,7 +6,7 @@ import { Label } from '@/components/Label';
 import { SelectionBox } from '@/components/SelectionBox';
 import { Input } from '@/components/Input';
 
-const Place = ({ margin, places, onFillIn }) => {
+const Place = ({ margin, places, onFillIn, onLeaveBlank }) => {
   const [selectedCity, setSelectedCity] = useState(null);
   const townRef = useRef(null);
 
@@ -21,73 +21,56 @@ const Place = ({ margin, places, onFillIn }) => {
   }, [selectedCity, places]);
 
   const handleChange = (e) => {
+    if (isDetailAddressEntered(e)) {
+      isInputEmpty(e) ? onLeaveBlank('detailAddress') : onFillIn(e);
+      return;
+    }
+
     if (isCitySelection(e)) {
       if (isDefaultOptionSelected(e)) {
-        onFillIn({
-          target: [
-            { name: 'cityId', value: null },
-            { name: 'townId', value: null }
-          ]
-        });
+        onLeaveBlank('cityId');
+        onLeaveBlank('townId');
         setSelectedCity(null);
-      } else if (!isDefaultOptionSelected(e)) {
+      } else {
         townRef.current[0].selected = true;
         const selectedCityId = places.find(({ name }) => name === e.target.value).id;
-        onFillIn({
-          target: [
-            { name: 'cityId', value: selectedCityId },
-            { name: 'townId', value: null }
-          ]
-        });
         setSelectedCity(e.target.value);
+        onFillIn({ cityId: selectedCityId });
+        onLeaveBlank('townId');
       }
       return;
     }
     if (isTownSelection(e)) {
       if (isDefaultOptionSelected(e)) {
-        onFillIn({ target: { name: 'townId', value: null } });
-      } else if (!isDefaultOptionSelected(e)) {
+        onLeaveBlank('townId');
+      } else {
         const towns = places.find(({ name }) => name === selectedCity).towns;
         const selectedTownId = towns.find(({ name }) => name === e.target.value).id;
-        onFillIn({ target: { name: 'townId', value: selectedTownId } });
+        onFillIn({ townId: selectedTownId });
       }
       return;
     }
   };
 
-  const handleInput = (e) => {
-    if (e.target.value.length > 0) {
-      onFillIn({ target: { name: 'detailAddress', value: e.target.value } });
-    } else {
-      onFillIn({ target: { name: 'detailAddress', value: null } });
-    }
-  };
-
   return (
-    <Wrapper margin={margin}>
-      <Label forHtml="status" bgColor="brand">
+    <Wrapper margin={margin} onChange={handleChange}>
+      <Label forHtml="city" bgColor="brand">
         장소
       </Label>
       <LineBreakWrapper margin="1.8rem 0 0 0">
+        <SelectionBox id="city" name="city" options={cities || []} defaultOption="시/도" required />
         <SelectionBox
-          id="status"
-          options={cities || []}
-          defaultOption="시/도"
-          required={true}
-          onChange={handleChange}
-        />
-        <SelectionBox
-          id="status"
+          id="town"
+          name="town"
           options={towns || []}
           defaultOption="시/군/구"
-          required={true}
           margin="0 0 0 2rem"
-          onChange={handleChange}
           propRef={townRef}
+          required
         />
         <Input
+          name="detailAddress"
           placeholder="추가적인 정보를 적어주세요"
-          onChange={handleInput}
           margin="1.8rem 0 0 0"
           maxLength="255"
         />
@@ -102,12 +85,15 @@ const Wrapper = styled.div`
 
 Place.propTypes = {
   onFillIn: PropTypes.func,
+  onLeaveBlank: PropTypes.func,
   places: PropTypes.array,
   margin: PropTypes.string
 };
 
 export default Place;
 
+const isDetailAddressEntered = (e) => e.target.tagName === 'INPUT';
 const isDefaultOptionSelected = (e) => e.target[0].textContent === e.target.value;
 const isCitySelection = (e) => e.target[0].textContent === '시/도';
 const isTownSelection = (e) => e.target[0].textContent === '시/군/구';
+const isInputEmpty = (e) => e.target.value.length === 0;

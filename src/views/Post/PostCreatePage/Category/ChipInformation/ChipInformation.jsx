@@ -4,13 +4,9 @@ import styled from '@emotion/styled';
 import { Label } from '@/components/Label';
 import { Input } from '@/components/Input';
 
-const ChipInformation = ({ margin, onFillIn }) => {
+const ChipInformation = ({ margin, onFillIn, onLeaveBlank }) => {
   const handleChange = (e) => {
-    if (e.target.value.length > 0) {
-      onFillIn({ target: { name: 'chipNumber', value: e.target.value } });
-    } else if (e.target.value.length === 0) {
-      onFillIn({ target: { name: 'chipNumber', value: null } });
-    }
+    isInputEmpty(e) ? onLeaveBlank('chipNumber') : onFillIn(e);
   };
 
   return (
@@ -34,7 +30,10 @@ const Wrapper = styled.div`
 
 ChipInformation.propTypes = {
   margin: PropTypes.string,
-  onFillIn: PropTypes.func
+  onFillIn: PropTypes.func,
+  onLeaveBlank: PropTypes.func
 };
 
 export default ChipInformation;
+
+const isInputEmpty = (e) => e.target.value.length === 0;
