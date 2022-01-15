@@ -4,13 +4,9 @@ import styled from '@emotion/styled';
 import { Label } from '@/components/Label';
 import { Input } from '@/components/Input';
 
-const Contact = ({ margin, onFillIn }) => {
+const Contact = ({ margin, onFillIn, onLeaveBlank }) => {
   const handleInput = (e) => {
-    if (e.target.value.length > 0) {
-      onFillIn({ target: { name: 'telNumber', value: e.target.value } });
-    } else if (e.target.value.length === 0) {
-      onFillIn({ target: { name: 'telNumber', value: null } });
-    }
+    isInputEmpty(e) ? onLeaveBlank('telNumber') : onFillIn(e);
   };
 
   return (
@@ -19,6 +15,7 @@ const Contact = ({ margin, onFillIn }) => {
         연락처
       </Label>
       <Input
+        name="telNumber"
         onChange={handleInput}
         placeholder="연락처 정보를 적어주세요"
         maxLength="15"
@@ -35,7 +32,10 @@ const Wrapper = styled.div`
 
 Contact.propTypes = {
   margin: PropTypes.string,
-  onFillIn: PropTypes.func
+  onFillIn: PropTypes.func,
+  onLeaveBlank: PropTypes.func
 };
 
 export default Contact;
+
+const isInputEmpty = (e) => e.target.value.length === 0;

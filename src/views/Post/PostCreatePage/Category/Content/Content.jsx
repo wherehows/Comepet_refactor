@@ -3,15 +3,11 @@ import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import { Label } from '@/components/Label';
 
-const Content = ({ margin, onFillIn }) => {
+const Content = ({ margin, onFillIn, onLeaveBlank }) => {
   const handleInput = (e) => {
     const pureText = e.target.textContent;
     const textWithTags = e.target.innerHTML;
-    if (pureText.length !== 0) {
-      onFillIn({ target: { name: 'content', value: textWithTags } });
-    } else if (pureText.length === 0) {
-      onFillIn({ target: { name: 'content', value: null } });
-    }
+    isInputEmpty(pureText) ? onLeaveBlank('content') : onFillIn({ content: textWithTags });
   };
 
   const handleKeyDown = (e) => {
@@ -66,7 +62,10 @@ const ContentEditor = styled.div`
 
 Content.propTypes = {
   margin: PropTypes.string,
-  onFillIn: PropTypes.func
+  onFillIn: PropTypes.func,
+  onLeaveBlank: PropTypes.func
 };
 
 export default Content;
+
+const isInputEmpty = (string) => string.length === 0;
