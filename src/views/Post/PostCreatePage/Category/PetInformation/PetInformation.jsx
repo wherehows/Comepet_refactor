@@ -6,37 +6,62 @@ import { Label } from '@/components/Label';
 import { SelectionBox } from '@/components/SelectionBox';
 import { Input } from '@/components/Input';
 import { CheckBox } from '@/components/CheckBox';
-import { GENDER } from '@/utils/constants';
 
 const PetInformation = ({ margin, animals, onFillIn, onLeaveBlank }) => {
-  const [animal, setAnimal] = useState(null);
+  const [animal, setAnimal] = useState('동물');
   const [animalKindName, setAnimalKindName] = useState(null);
-  const [age, setAge] = useState(null);
-  const [sex, setSex] = useState(null);
   const [isAnimalUnknown, setIsAnimalUnknown] = useState(false);
-  const [isAgeUnknown, setIsAgeUnknown] = useState(false);
-  const [isSexUnknown, setIsSexUnknown] = useState(false);
   const kindsSelectionBoxRef = useRef(null);
   const kindsCheckBoxRef = useRef(null);
 
   const animalList = useMemo(() => {
-    const targetAnimal = animals?.find(({ name }) => name === animal);
-    const kinds = targetAnimal?.kinds;
-    const res = kinds?.map(({ name }) => name);
+    const selectedAnimal = animals.find(({ name }) => name === animal);
+    const selectedKinds = selectedAnimal?.kinds;
+    const res = selectedKinds?.map(({ name }) => name);
     return res;
   }, [animal, animals]);
 
   useEffect(() => {
-    if (animal !== null && animal !== '동물') {
-      const targetObject = animals?.find(({ name }) => name === animal);
-      const targetId = targetObject.id;
-      onFillIn({ animalId: targetId });
-    } else if (animal === null) {
+    if (!isAnimalSelected(animal)) {
       onLeaveBlank('animalId');
+    } else {
+      const selectedAniaml = animals?.find(({ name }) => name === animal);
+      const selectedId = selectedAniaml?.id;
+      onFillIn({ animalId: selectedId });
     }
   }, [animal]);
 
   const handleChange = (e) => {
+    if (isCheckBoxChecked(e)) {
+      setIsAnimalUnknown(!isAnimalUnknown);
+      const valueToSave = (e.target.checked && 'UNKNOWN') || animalKindName || null;
+      onFillIn({ animalKindName: valueToSave });
+      return;
+    }
+
+    if (isInputChange(e)) {
+      if (isKindsInput(e)) {
+        if (isEmpty(e)) {
+          onLeaveBlank('animalKindName');
+        } else {
+          onFillIn({ animalKindName: e.target.value });
+        }
+        return;
+      }
+
+      if (isAgeInput(e)) {
+        if (isEmpty(e)) {
+          onLeaveBlank('age', -1);
+        } else {
+          const age = e.target.value;
+          if (age >= maxAge) e.target.value = maxAge;
+          else if (age < minAge) e.target.value = minAge;
+          onFillIn({ age: Number(e.target.value) });
+        }
+        return;
+      }
+    }
+
     if (isSelectChange(e)) {
       if (isAnimalSelection(e)) {
         if (isDefalutOptionSelected(e)) {
@@ -60,17 +85,15 @@ const PetInformation = ({ margin, animals, onFillIn, onLeaveBlank }) => {
           onLeaveBlank('animalKindName');
         } else {
           setAnimalKindName(e.target.value);
-          onFillIn(e);
+          onFillIn({ animalKindName: e.target.value });
         }
         return;
       }
 
       if (isSexSelection(e)) {
         if (isDefalutOptionSelected(e)) {
-          setSex(null);
-          onLeaveBlank('sex');
+          onLeaveBlank('sex', 'UNKNOWN');
         } else {
-          setSex(e.target.value);
           onFillIn({
             sex:
               (e.target.value === '수컷' && 'MALE') ||
@@ -81,60 +104,11 @@ const PetInformation = ({ margin, animals, onFillIn, onLeaveBlank }) => {
         return;
       }
     }
-    if (isInputChange(e)) {
-      if (isKindsInput(e)) {
-        if (isEmpty(e)) {
-          onLeaveBlank('animalKindName');
-        } else {
-          onFillIn(e);
-        }
-        return;
-      }
-
-      if (isAgeInput(e)) {
-        if (isEmpty(e)) {
-          setAge(null);
-          onLeaveBlank('age');
-        } else {
-          let age = Number(e.target.value);
-          if (age >= 499) e.target.value = 499;
-          if (age < 0) e.target.value = 0;
-
-          setAge(Number(e.target.value));
-          onFillIn({ age: Number(e.target.value) });
-        }
-        return;
-      }
-    }
-    if (isCheckBoxChecked(e)) {
-      let valueToSave = null;
-
-      if (e.target.id === 'kinds-checkbox') {
-        setIsAnimalUnknown(!isAnimalUnknown);
-        valueToSave = (e.target.checked && 'UNKNOWN') || animalKindName || null;
-        onFillIn({ animalKindName: valueToSave });
-        return;
-      }
-
-      if (e.target.id === 'age-checkbox') {
-        setIsAgeUnknown(!isAgeUnknown);
-        valueToSave = (e.target.checked && -1) || age || null;
-        onFillIn({ age: valueToSave });
-        return;
-      }
-
-      if (e.target.id === 'sex-checkbox') {
-        setIsSexUnknown(!isSexUnknown);
-        valueToSave = (e.target.checked && 'UNKNOWN') || sex || null;
-        onFillIn({ sex: valueToSave });
-        return;
-      }
-    }
   };
 
   return (
     <Wrapper margin={margin} onChange={handleChange}>
-      <Label forHtml="animal" bgColor="brand">
+      <Label htmlFor="animal" bgColor="brand">
         동물 정보
       </Label>
       <LineBreakWrapper margin="1.8rem 0 0 0">
@@ -148,7 +122,6 @@ const PetInformation = ({ margin, animals, onFillIn, onLeaveBlank }) => {
           (animal === '기타' && (
             <>
               <Input
-                name="animalKindName"
                 id="kinds-input"
                 placeholder="동물명 혹은 품종"
                 width="50%"
@@ -159,19 +132,18 @@ const PetInformation = ({ margin, animals, onFillIn, onLeaveBlank }) => {
               />
               <CheckBox
                 id="kinds-checkbox"
-                propRef={kindsCheckBoxRef}
                 margin="0 0 0 1.2rem"
                 fontSize="1.4rem"
+                propRef={kindsCheckBoxRef}
               />
             </>
           )) || (
             <LineBreakWrapper>
               <SelectionBox
-                name="animalKindName"
-                options={animalList || []}
                 defaultOption="품종"
                 margin="1.6rem 0 0 0"
                 required
+                options={animalList || []}
                 disabled={isAnimalUnknown}
                 propRef={kindsSelectionBoxRef}
               />
@@ -180,22 +152,12 @@ const PetInformation = ({ margin, animals, onFillIn, onLeaveBlank }) => {
         <LineBreakWrapper>
           <Input
             id="age-input"
-            width="8rem"
+            width="10rem"
             placeholder="나이"
             type="number"
             margin="1.8rem 0 0 0"
-            disabled={isAgeUnknown}
-            required
           />
-          <CheckBox id="age-checkbox" margin="0 0 0 1.6rem" fontSize="1.4rem" />
-          <SelectionBox
-            options={Object.values(GENDER)}
-            defaultOption="성별"
-            required={true}
-            margin="0 0 0 1.6rem"
-            disabled={isSexUnknown}
-          />
-          <CheckBox id="sex-checkbox" margin="0 0 0 1.6rem" fontSize="1.4rem" />
+          <SelectionBox options={['수컷', '암컷']} defaultOption="성별" margin="0 0 0 1.6rem" />
         </LineBreakWrapper>
       </LineBreakWrapper>
     </Wrapper>
@@ -220,8 +182,11 @@ const isInputChange = (e) => e.target.tagName === 'INPUT';
 const isKindsInput = (e) => e.target.id === 'kinds-input';
 const isAgeInput = (e) => e.target.id === 'age-input';
 const isAnimalSelection = (e) => e.target[0].textContent === '동물';
+const isAnimalSelected = (animal) => animal === '동물';
 const isKindsSelection = (e) => e.target[0].textContent === '품종';
 const isSexSelection = (e) => e.target[0].textContent === '성별';
 const isDefalutOptionSelected = (e) => e.target[0].textContent === e.target.value;
 const isEmpty = (e) => e.target.value.length === 0;
 const isCheckBoxChecked = (e) => e.target.type === 'checkbox';
+const maxAge = 499;
+const minAge = 0;
