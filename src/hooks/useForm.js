@@ -6,20 +6,10 @@ const useForm = ({ initialValues, onSubmit, validate, handleNavigate, handleErro
   const [isLoading, setIsLoading] = useState(false);
 
   const handleFillIn = (param) => {
-    if (isEventObject(param)) {
-      setValues((values) => ({ ...values, [param.target.name]: param.target.value }));
-      return;
-    }
-
     setValues((values) => ({ ...values, ...param }));
   };
 
   const handleLeaveBlank = (param, blankValue) => {
-    if (isEventObject(param)) {
-      setValues((values) => ({ ...values, [param.target.name]: null }));
-      return;
-    }
-
     setValues((values) => ({ ...values, [param]: blankValue || null }));
   };
 
@@ -52,5 +42,3 @@ const useForm = ({ initialValues, onSubmit, validate, handleNavigate, handleErro
 };
 
 export default useForm;
-
-const isEventObject = (e) => e.target;

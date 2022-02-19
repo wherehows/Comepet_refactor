@@ -86,12 +86,12 @@ const PetInformation = ({ margin, animalData, onSelectOption }) => {
 
   return (
     <Wrapper margin={margin}>
-      <Label forHtml="animal" bgColor="brand" size="xsmall">
+      <Label htmlFor="post-create-animal" bgColor="brand" size="xsmall">
         동물 정보
       </Label>
       <LineBreakWrapper margin="0.8rem 0 0 0">
         <SelectionBox
-          id="animal"
+          id="post-create-animal"
           onChange={handleChange}
           options={['개', '고양이', '기타']}
           defaultOption="동물"

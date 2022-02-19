@@ -15,11 +15,10 @@ const PetPhoto = ({ margin, onFillIn }) => {
   };
 
   const handleFileChange = (e) => {
-    if (isTheNumberOfPhotosUnderThree(e) && areFileSizesUnder5MB(e)) {
+    if (isTheNumberOfPhotosUnderFour(e) && areFileSizesUnder5MB(e)) {
       const nextFiles = [...e.target.files];
       setFiles(makeDataFormForSlider(nextFiles));
       setIsErrorOccurred(false);
-      // Todo: nextFiles를 넘겨줘도 되는지 확인하기
       onFillIn({ images: e.target.files });
       return;
     }
@@ -35,11 +34,11 @@ const PetPhoto = ({ margin, onFillIn }) => {
       <Caution isErrorOccurred={isErrorOccurred}>※ 이미지 3개를 동시에 선택해주세요</Caution>
       <Caution isErrorOccurred={isErrorOccurred}>한 장당 5MB 이하여야만 합니다.</Caution>
       <Button
-        onClick={handleChooseFile}
         width="60%"
         margin="5% auto 0 auto"
         bgColor="normalOrange"
-        type="button">
+        type="button"
+        onClick={handleChooseFile}>
         반려동물 사진 등록
       </Button>
     </Wrapper>
@@ -69,21 +68,12 @@ export default PetPhoto;
 
 const areFileSizesUnder5MB = (e) => {
   const { files } = e.target;
-  for (let i = 0; i < files.length; i++) {
-    const file = files[i];
-    if (file.size > 1024 * 1024 * 5) return false;
-  }
-
-  return true;
+  return files.some((file) => file.size > 1024 * 1024 * 5);
 };
 
-const isTheNumberOfPhotosUnderThree = (e) => e.target.files.length <= 3;
+const isTheNumberOfPhotosUnderFour = (e) => e.target.files.length <= 3;
 const makeDataFormForSlider = (files) => {
-  const res = [];
-  for (let i = 0; i < files.length; i++) {
-    const file = files[i];
-    res.push({ image: URL.createObjectURL(file) });
-  }
-
-  return res;
+  return files.map((file) => ({
+    image: URL.createObjectURL(file)
+  }));
 };
