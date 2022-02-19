@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 const Label = ({
   children,
-  forHtml,
+  htmlFor,
   fontSize,
   size,
   margin,
@@ -18,7 +18,7 @@ const Label = ({
 }) => {
   return (
     <Wrapper
-      forHtml={forHtml}
+      htmlFor={htmlFor}
       fontSize={fontSize}
       size={size}
       margin={margin}
@@ -52,7 +52,7 @@ const Wrapper = styled.label`
 Label.propTypes = {
   children: PropTypes.node.isRequired,
   bgColor: PropTypes.string.isRequired,
-  forHtml: PropTypes.string,
+  htmlFor: PropTypes.string,
   fontSize: PropTypes.string,
   size: PropTypes.string,
   margin: PropTypes.string,

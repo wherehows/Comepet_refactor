@@ -6,21 +6,21 @@ import { Input } from '@/components/Input';
 
 const Contact = ({ margin, onFillIn, onLeaveBlank }) => {
   const handleInput = (e) => {
-    isInputEmpty(e) ? onLeaveBlank('telNumber') : onFillIn(e);
+    isInputEmpty(e) ? onLeaveBlank('telNumber') : onFillIn({ telNumber: e.target.value });
   };
 
   return (
     <Wrapper margin={margin}>
-      <Label forHtml="status" bgColor="brand">
+      <Label htmlFor="post-create-tel-number" bgColor="brand">
         연락처
       </Label>
       <Input
-        name="telNumber"
-        onChange={handleInput}
+        id="post-create-tel-number"
         placeholder="연락처 정보를 적어주세요"
         maxLength="15"
         margin="1.8rem 0 0 0"
         required
+        onChange={handleInput}
       />
     </Wrapper>
   );

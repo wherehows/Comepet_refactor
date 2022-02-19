@@ -51,7 +51,7 @@ const Place = ({ margin, placeData, onSelectOption }) => {
 
   return (
     <Wrapper margin={margin}>
-      <Label forHtml="city" bgColor="brand" size="xsmall">
+      <Label htmlFor="city" bgColor="brand" size="xsmall">
         장소
       </Label>
       <LineBreakWrapper margin="0.8rem 0 0 0">

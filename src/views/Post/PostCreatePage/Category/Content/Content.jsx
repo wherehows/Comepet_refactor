@@ -11,9 +11,8 @@ const Content = ({ margin, onFillIn, onLeaveBlank }) => {
   };
 
   const handleKeyDown = (e) => {
-    if (e.target.textContent.length >= 255 && e.key !== 'Backspace') {
+    if (isPureTextLengthMoreThan255(e) && isBackSpaceEntered(e)) {
       e.preventDefault();
-      return;
     }
   };
 
@@ -23,16 +22,17 @@ const Content = ({ margin, onFillIn, onLeaveBlank }) => {
 
   return (
     <Wrapper margin={margin}>
-      <Label forHtml="status" bgColor="brand">
+      <Label htmlFor="post-create-content" bgColor="brand">
         내용
       </Label>
       <ContentEditor
+        id="post-create-content"
         margin="1.8rem 0 0 0"
+        contentEditable
+        placeholder="내용을 입력해주세요"
         onKeyDown={handleKeyDown}
         onInput={handleInput}
-        contentEditable
         onPaste={handlePaste}
-        placeholder="내용을 입력해주세요"
       />
     </Wrapper>
   );
@@ -69,3 +69,5 @@ Content.propTypes = {
 export default Content;
 
 const isInputEmpty = (string) => string.length === 0;
+const isPureTextLengthMoreThan255 = (e) => e.target.textContent.length >= 255;
+const isBackSpaceEntered = (e) => e.key === 'Backspace';

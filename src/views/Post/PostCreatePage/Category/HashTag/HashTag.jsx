@@ -16,18 +16,17 @@ const HashTag = ({ margin, onFillIn, onLeaveBlank }) => {
 
   const handleEnter = (e) => {
     if (
-      e.key === 'Enter' &&
-      inputValue.length !== 0 &&
-      inputValue.length <= 5 &&
-      tags.length <= 5
+      isEnterEntered(e) &&
+      !isEmpty(inputValue) &&
+      isStringLengthUnder6(inputValue) &&
+      isNumberOfTagsUnder6(tags)
     ) {
       setErrors('');
       handleAppendTag(inputValue);
-
       setInputValue('');
     }
 
-    if (e.key === 'Enter' && (e.target.value.length > 5 || tags.length >= 6)) {
+    if ((isEnterEntered(e) && !isStringLengthUnder6(inputValue)) || !isNumberOfTagsUnder6(tags)) {
       setErrors('5글자씩 총 6개까지만 입력이 가능합니다');
     }
   };
@@ -50,10 +49,11 @@ const HashTag = ({ margin, onFillIn, onLeaveBlank }) => {
 
   return (
     <Wrapper margin={margin}>
-      <Label forHtml="status" bgColor="brand">
+      <Label htmlFor="post-create-hash-tag" bgColor="brand">
         해쉬태그 입력
       </Label>
       <Input
+        id="post-create-hash-tag"
         placeholder="해쉬태그 입력 후 엔터를 눌러주세요"
         margin="1.8rem 0 1.8rem 0"
         onChange={handleInput}
@@ -133,3 +133,7 @@ HashTag.propTypes = {
 export default HashTag;
 
 const isTagsEmpty = (array) => array.length === 0;
+const isEnterEntered = (e) => e.key === 'Enter';
+const isEmpty = (string) => string.length === 0;
+const isStringLengthUnder6 = (string) => string.length < 6;
+const isNumberOfTagsUnder6 = (tags) => tags.length < 6;

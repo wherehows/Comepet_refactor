@@ -94,7 +94,7 @@ const Date = ({ margin, onSelectOption }) => {
 
   return (
     <Wrapper margin={margin}>
-      <Label forHtml="year" bgColor="brand" size="xsmall">
+      <Label htmlFor="year" bgColor="brand" size="xsmall">
         시작 날짜
       </Label>
       <LineBreakWrapper margin="1.2rem 0 0 0">
@@ -125,7 +125,7 @@ const Date = ({ margin, onSelectOption }) => {
         />
       </LineBreakWrapper>
       <LineBreakWrapper margin="1.2rem 0 0 0">
-        <Label forHtml="year" bgColor="brand" size="xsmall">
+        <Label htmlFor="year" bgColor="brand" size="xsmall">
           종료 날짜
         </Label>
         <LineBreakWrapper margin="1.2rem 0 0 0">

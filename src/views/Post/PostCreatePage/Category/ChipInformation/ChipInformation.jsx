@@ -6,19 +6,20 @@ import { Input } from '@/components/Input';
 
 const ChipInformation = ({ margin, onFillIn, onLeaveBlank }) => {
   const handleChange = (e) => {
-    isInputEmpty(e) ? onLeaveBlank('chipNumber') : onFillIn(e);
+    isInputEmpty(e) ? onLeaveBlank('chipNumber') : onFillIn({ chipNumber: e.target.value });
   };
 
   return (
     <Wrapper margin={margin}>
-      <Label forHtml="status" bgColor="brand">
+      <Label htmlFor="post-create-chip-number" bgColor="brand">
         칩번호
       </Label>
       <Input
+        id="post-create-chip-number"
         placeholder="칩번호를 입력해 주세요"
         type="number"
-        onChange={handleChange}
         margin="1.8rem 0 0 0"
+        onChange={handleChange}
       />
     </Wrapper>
   );
