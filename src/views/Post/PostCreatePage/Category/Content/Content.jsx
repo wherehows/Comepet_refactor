@@ -22,11 +22,11 @@ const Content = ({ margin, onFillIn, onLeaveBlank }) => {
 
   return (
     <Wrapper margin={margin}>
-      <Label htmlFor="post-create-content" bgColor="brand">
+      <Label htmlFor="content" bgColor="brand">
         내용
       </Label>
       <ContentEditor
-        id="post-create-content"
+        id="content"
         margin="1.8rem 0 0 0"
         contentEditable
         placeholder="내용을 입력해주세요"

@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 import { Label } from '@/components/Label';
 import { Input } from '@/components/Input';
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
+import uuid from 'react-uuid';
 
 const HashTag = ({ margin, onFillIn, onLeaveBlank }) => {
   const [tags, setTags] = useState([]);
@@ -31,29 +32,27 @@ const HashTag = ({ margin, onFillIn, onLeaveBlank }) => {
     }
   };
 
-  const handleDelete = (e) => {
-    const nextTags = [...tags].filter(
-      ({ name }) => '#' + name !== e.currentTarget.previousSibling.textContent
-    );
-
-    setTags(nextTags);
-    isTagsEmpty(nextTags) ? onLeaveBlank('tags', []) : onFillIn({ tags: nextTags });
-  };
-
   const handleAppendTag = (nextTag) => {
-    const nextTags = [...tags];
-    nextTags.push({ name: `${nextTag}` });
+    const nextTags = tags.concat({ name: `${nextTag}`, id: uuid() });
+
     setTags(nextTags);
     onFillIn({ tags: nextTags });
   };
 
+  const handleDelete = (key) => {
+    const nextTags = tags.filter(({ id }) => id !== key);
+
+    setTags(nextTags);
+    isTagEmpty(nextTags) ? onLeaveBlank('tags', []) : onFillIn({ tags: nextTags });
+  };
+
   return (
     <Wrapper margin={margin}>
-      <Label htmlFor="post-create-hash-tag" bgColor="brand">
+      <Label htmlFor="hash-tag" bgColor="brand">
         해쉬태그 입력
       </Label>
       <Input
-        id="post-create-hash-tag"
+        id="hash-tag"
         placeholder="해쉬태그 입력 후 엔터를 눌러주세요"
         margin="1.8rem 0 1.8rem 0"
         onChange={handleInput}
@@ -63,10 +62,10 @@ const HashTag = ({ margin, onFillIn, onLeaveBlank }) => {
       <Error error={error}>{error}</Error>
       <HashTagWrapper>
         <TagList>
-          {tags.map(({ name }, index) => (
-            <TagWrapper key={index}>
+          {tags.map(({ name, id }) => (
+            <TagWrapper key={id}>
               <Tag>#{name}</Tag>
-              <Button onClick={handleDelete} type="button">
+              <Button onClick={() => handleDelete(id)} type="button">
                 <StyledCancelRoundedIcon />
               </Button>
             </TagWrapper>
@@ -132,7 +131,7 @@ HashTag.propTypes = {
 
 export default memo(HashTag);
 
-const isTagsEmpty = (array) => array.length === 0;
+const isTagEmpty = (array) => array.length === 0;
 const isEnterEntered = (e) => e.key === 'Enter';
 const isEmpty = (string) => string.length === 0;
 const isStringLengthUnder6 = (string) => string.length < 6;
