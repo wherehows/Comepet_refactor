@@ -21,12 +21,12 @@ const Status = ({ onFillIn, onLeaveBlank }) => {
 
   return (
     <Wrapper>
-      <Label htmlFor="post-create-status" bgColor="brand">
+      <Label htmlFor="status" bgColor="brand">
         상태 정보
       </Label>
       <LineBreakWrapper margin="1.8rem 0 0 0">
         <SelectionBox
-          id="post-create-status"
+          id="status"
           onChange={handleChange}
           options={['실종', '목격', '보호', '완료']}
           defaultOption="상태 옵션"

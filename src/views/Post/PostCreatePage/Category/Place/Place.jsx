@@ -58,13 +58,13 @@ const Place = ({ margin, places, onFillIn, onLeaveBlank }) => {
 
   return (
     <Wrapper margin={margin} onChange={handleChange}>
-      <Label htmlFor="post-create-city" bgColor="brand">
+      <Label htmlFor="city" bgColor="brand">
         장소
       </Label>
       <LineBreakWrapper margin="1.8rem 0 0 0">
-        <SelectionBox id="post-create-city" options={cities || []} defaultOption="시/도" required />
+        <SelectionBox id="city" options={cities || []} defaultOption="시/도" required />
         <SelectionBox
-          id="post-create-town"
+          id="town"
           options={towns || []}
           defaultOption="시/군/구"
           margin="0 0 0 2rem"
