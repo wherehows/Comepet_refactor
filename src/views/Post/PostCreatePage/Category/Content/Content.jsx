@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import { Label } from '@/components/Label';
@@ -66,7 +66,7 @@ Content.propTypes = {
   onLeaveBlank: PropTypes.func
 };
 
-export default Content;
+export default memo(Content);
 
 const isInputEmpty = (string) => string.length === 0;
 const isPureTextLengthMoreThan255 = (e) => e.target.textContent.length >= 255;

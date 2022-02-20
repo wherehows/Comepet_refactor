@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, memo } from 'react';
 import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 import { Slider } from '@/components/Slider';
@@ -64,7 +64,7 @@ PetPhoto.propTypes = {
   margin: PropTypes.string
 };
 
-export default PetPhoto;
+export default memo(PetPhoto);
 
 const areFileSizesUnder5MB = (e) => {
   const { files } = e.target;

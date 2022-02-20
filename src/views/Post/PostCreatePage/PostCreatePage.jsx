@@ -13,7 +13,6 @@ import {
   Content,
   PetPhoto
 } from './Category';
-import ErrorModal from './ErrorModal/ErrorModal';
 import useForm from '@/hooks/useForm';
 import { placeData, animalData } from '@/data/data';
 
@@ -133,7 +132,6 @@ const PostCreatePage = () => {
             취소하기
           </Button>
         </ButtonWrapper>
-        {isErrorExist && <ErrorModal onClose={() => setIsErrorExist(false)} />}
       </Form>
     </Wrapper>
   );

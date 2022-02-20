@@ -1,4 +1,4 @@
-import React, { useState, useRef, useMemo } from 'react';
+import React, { useState, useRef, useMemo, memo } from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import LineBreakWrapper from '../Common/LineBreakWrapper';
@@ -88,7 +88,7 @@ Place.propTypes = {
   margin: PropTypes.string
 };
 
-export default Place;
+export default memo(Place);
 
 const isDetailAddressEntered = (e) => e.target.tagName === 'INPUT';
 const isDefaultOptionSelected = (e) => e.target[0].textContent === e.target.value;

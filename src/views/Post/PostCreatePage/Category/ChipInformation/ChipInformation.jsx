@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import { Label } from '@/components/Label';
@@ -35,6 +35,6 @@ ChipInformation.propTypes = {
   onLeaveBlank: PropTypes.func
 };
 
-export default ChipInformation;
+export default memo(ChipInformation);
 
 const isInputEmpty = (e) => e.target.value.length === 0;

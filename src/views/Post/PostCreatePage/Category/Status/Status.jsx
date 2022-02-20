@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import LineBreakWrapper from '../Common/LineBreakWrapper';
@@ -44,5 +44,5 @@ Status.propTypes = {
   onLeaveBlank: PropTypes.func
 };
 
-export default Status;
+export default memo(Status);
 const isDefalutOptionSelected = (e) => e.target[0].textContent === e.target.value;
