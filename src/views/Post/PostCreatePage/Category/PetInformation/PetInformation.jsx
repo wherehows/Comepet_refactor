@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import React, { useState, useEffect, useRef, useMemo, memo } from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import LineBreakWrapper from '../Common/LineBreakWrapper';
@@ -175,7 +175,7 @@ PetInformation.propTypes = {
   margin: PropTypes.string
 };
 
-export default PetInformation;
+export default memo(PetInformation);
 
 const isSelectChange = (e) => e.target.tagName === 'SELECT';
 const isInputChange = (e) => e.target.tagName === 'INPUT';

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, memo } from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import LineBreakWrapper from '../Common/LineBreakWrapper';
@@ -89,7 +89,7 @@ Date.propTypes = {
   margin: PropTypes.string
 };
 
-export default Date;
+export default memo(Date);
 
 const getRangeOfYear = () => {
   const thisYear = new window.Date().getFullYear();

@@ -1,19 +1,19 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 
 const useForm = ({ initialValues, onSubmit, validate, handleNavigate, handleErrors }) => {
   const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleFillIn = (param) => {
+  const handleFillIn = useCallback((param) => {
     setValues((values) => ({ ...values, ...param }));
-  };
+  }, []);
 
-  const handleLeaveBlank = (param, blankValue) => {
+  const handleLeaveBlank = useCallback((param, blankValue) => {
     setValues((values) => ({ ...values, [param]: blankValue || null }));
-  };
+  }, []);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = useCallback(async (e) => {
     setIsLoading(true);
     e.preventDefault();
     const newErrors = (validate && validate(values)) || {};
@@ -27,7 +27,7 @@ const useForm = ({ initialValues, onSubmit, validate, handleNavigate, handleErro
     handleErrors && Object.keys(newErrors).length !== 0 && handleErrors();
     setIsLoading(false);
     onSubmitResult && handleNavigate(onSubmitResult);
-  };
+  }, []);
 
   return {
     values,

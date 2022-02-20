@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import { Label } from '@/components/Label';
@@ -36,6 +36,6 @@ Contact.propTypes = {
   onLeaveBlank: PropTypes.func
 };
 
-export default Contact;
+export default memo(Contact);
 
 const isInputEmpty = (e) => e.target.value.length === 0;

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import { Label } from '@/components/Label';
@@ -130,7 +130,7 @@ HashTag.propTypes = {
   onLeaveBlank: PropTypes.func
 };
 
-export default HashTag;
+export default memo(HashTag);
 
 const isTagsEmpty = (array) => array.length === 0;
 const isEnterEntered = (e) => e.key === 'Enter';
