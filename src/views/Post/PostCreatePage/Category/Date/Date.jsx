@@ -50,20 +50,18 @@ const Date = ({ margin, onFillIn, onLeaveBlank }) => {
 
   return (
     <Wrapper margin={margin} onChange={handleChange}>
-      <Label htmlFor="year" bgColor="brand">
-        날짜
-      </Label>
+      <Label bgColor="brand">날짜</Label>
       <LineBreakWrapper margin="1.8rem 0 0 0">
-        <SelectionBox id="year" defaultOption="년" required options={getRangeOfYear()} />
+        <SelectionBox ariaLabel="year" defaultOption="년" required options={getRangeOfYear()} />
         <SelectionBox
-          id="month"
+          ariaLabel="month"
           defaultOption="월"
           margin="0 0 0 2rem"
           required
           options={getRangeOfMonth(selectedYear)}
         />
         <SelectionBox
-          id="day"
+          ariaLabel="day"
           defaultOption="일"
           margin="0 0 0 2rem"
           required
