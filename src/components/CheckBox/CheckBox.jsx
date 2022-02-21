@@ -2,7 +2,17 @@ import React from 'react';
 import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 
-const CheckBox = ({ onChange, propRef, id, text, marginBetween, fontSize, margin, fontColor }) => {
+const CheckBox = ({
+  onChange,
+  propRef,
+  id,
+  text,
+  marginBetween,
+  fontSize,
+  margin,
+  fontColor,
+  ariaLabel
+}) => {
   return (
     <Wrapper margin={margin}>
       <Input
@@ -11,6 +21,7 @@ const CheckBox = ({ onChange, propRef, id, text, marginBetween, fontSize, margin
         id={id}
         marginBetween={marginBetween}
         ref={propRef}
+        ariaLabel={ariaLabel}
       />
       <Label htmlFor={id} fontSize={fontSize} fontColor={fontColor}>
         {text || '모름'}
@@ -45,7 +56,8 @@ CheckBox.propTypes = {
   margin: PropTypes.string,
   propRef: PropTypes.shape({
     current: PropTypes.instanceOf(Element)
-  })
+  }),
+  ariaLabel: PropTypes.string
 };
 
 export default CheckBox;

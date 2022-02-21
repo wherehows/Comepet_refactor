@@ -22,7 +22,8 @@ const Button = ({
   bottom,
   position,
   onClick,
-  disabled
+  disabled,
+  ariaLabel
 }) => {
   return (
     <Wrapper
@@ -44,7 +45,8 @@ const Button = ({
       bottom={bottom}
       position={position}
       onClick={onClick}
-      disabled={disabled}>
+      disabled={disabled}
+      aria-label={ariaLabel}>
       {children}
     </Wrapper>
   );
@@ -92,7 +94,8 @@ Button.propTypes = {
   bottom: PropTypes.string,
   position: PropTypes.string,
   onClick: PropTypes.func,
-  disabled: PropTypes.bool
+  disabled: PropTypes.bool,
+  ariaLabel: PropTypes.string
 };
 
 export default Button;
