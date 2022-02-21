@@ -23,7 +23,8 @@ const SelectionBox = ({
   margin,
   onChange,
   propRef,
-  usedAt
+  usedAt,
+  ariaLabel
 }) => {
   const [color, setColor] = useState(decideColor({ required, usedAt, disabled }));
   const selectRef = useRef(null);
@@ -63,7 +64,8 @@ const SelectionBox = ({
         fontSize={fontSize}
         height={height}
         id={id}
-        name={name}>
+        name={name}
+        aria-label={ariaLabel}>
         <Option>{defaultOption}</Option>
         {options?.map((option, index) => (
           <Option key={index}>{option}</Option>
@@ -123,6 +125,7 @@ SelectionBox.propTypes = {
   propRef: PropTypes.shape({
     current: PropTypes.instanceOf(Element)
   }),
+  ariaLabel: PropTypes.string,
   usedAt: PropTypes.string
 };
 

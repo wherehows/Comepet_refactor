@@ -65,7 +65,7 @@ const HashTag = ({ margin, onFillIn, onLeaveBlank }) => {
           {tags.map(({ name, id }) => (
             <TagWrapper key={id}>
               <Tag>#{name}</Tag>
-              <Button onClick={() => handleDelete(id)} type="button">
+              <Button onClick={() => handleDelete(id)} type="button" ariaLabel="delete">
                 <StyledCancelRoundedIcon />
               </Button>
             </TagWrapper>

@@ -108,12 +108,10 @@ const PetInformation = ({ margin, animals, onFillIn, onLeaveBlank }) => {
 
   return (
     <Wrapper margin={margin} onChange={handleChange}>
-      <Label htmlFor="animal" bgColor="brand">
-        동물 정보
-      </Label>
+      <Label bgColor="brand">동물 정보</Label>
       <LineBreakWrapper margin="1.8rem 0 0 0">
         <SelectionBox
-          id="animal"
+          ariaLabel="animal"
           options={['개', '고양이', '기타']}
           defaultOption="동물"
           required
@@ -122,7 +120,7 @@ const PetInformation = ({ margin, animals, onFillIn, onLeaveBlank }) => {
           (animal === '기타' && (
             <>
               <Input
-                id="kinds-input"
+                ariaLabel="kinds"
                 placeholder="동물명 혹은 품종"
                 width="50%"
                 margin="0 0 0 1.8rem"
@@ -131,7 +129,7 @@ const PetInformation = ({ margin, animals, onFillIn, onLeaveBlank }) => {
                 disabled={isAnimalUnknown}
               />
               <CheckBox
-                id="kinds-checkbox"
+                ariaLabel="dont know kinds"
                 margin="0 0 0 1.2rem"
                 fontSize="1.4rem"
                 propRef={kindsCheckBoxRef}
@@ -143,7 +141,7 @@ const PetInformation = ({ margin, animals, onFillIn, onLeaveBlank }) => {
                 defaultOption="품종"
                 margin="1.6rem 0 0 0"
                 required
-                options={animalList || []}
+                options={animalList}
                 disabled={isAnimalUnknown}
                 propRef={kindsSelectionBoxRef}
               />
@@ -151,13 +149,18 @@ const PetInformation = ({ margin, animals, onFillIn, onLeaveBlank }) => {
           )}
         <LineBreakWrapper>
           <Input
-            id="age-input"
+            ariaLabel="age"
             width="10rem"
             placeholder="나이"
             type="number"
             margin="1.8rem 0 0 0"
           />
-          <SelectionBox options={['수컷', '암컷']} defaultOption="성별" margin="0 0 0 1.6rem" />
+          <SelectionBox
+            ariaLabel="sex"
+            options={['수컷', '암컷']}
+            defaultOption="성별"
+            margin="0 0 0 1.6rem"
+          />
         </LineBreakWrapper>
       </LineBreakWrapper>
     </Wrapper>

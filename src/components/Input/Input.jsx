@@ -25,7 +25,8 @@ const Input = ({
   onBlur,
   onKeyDown,
   onKeyPress,
-  cursor
+  cursor,
+  ariaLabel
 }) => {
   return (
     <StyledInput
@@ -52,6 +53,7 @@ const Input = ({
       onKeyDown={onKeyDown}
       onKeyPress={onKeyPress}
       cursor={cursor}
+      aria-label={ariaLabel}
     />
   );
 };
@@ -101,7 +103,8 @@ Input.propTypes = {
   onBlur: PropTypes.func,
   onKeyDown: PropTypes.func,
   onKeyPress: PropTypes.func,
-  cursor: PropTypes.string
+  cursor: PropTypes.string,
+  ariaLabel: PropTypes.string
 };
 
 export default Input;
