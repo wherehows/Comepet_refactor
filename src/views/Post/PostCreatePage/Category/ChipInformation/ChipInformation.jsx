@@ -11,11 +11,11 @@ const ChipInformation = ({ margin, onFillIn, onLeaveBlank }) => {
 
   return (
     <Wrapper margin={margin}>
-      <Label htmlFor="post-create-chip-number" bgColor="brand">
+      <Label htmlFor="chip-number" bgColor="brand">
         칩번호
       </Label>
       <Input
-        id="post-create-chip-number"
+        id="chip-number"
         placeholder="칩번호를 입력해 주세요"
         type="number"
         margin="1.8rem 0 0 0"
