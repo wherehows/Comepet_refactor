@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 import { Slider } from '@/components/Slider';
 import { Button } from '@/components/Button';
+import { Lazy, take, go, pipe, isLength } from '@/utils/fxjs';
 
 const PetPhoto = ({ margin, onFillIn }) => {
   const [files, setFiles] = useState([]);
@@ -16,8 +17,7 @@ const PetPhoto = ({ margin, onFillIn }) => {
 
   const handleFileChange = (e) => {
     if (isTheNumberOfPhotosUnderFour(e) && areFileSizesUnder5MB(e)) {
-      const nextFiles = [...e.target.files];
-      setFiles(makeDataFormForSlider(nextFiles));
+      setFiles(makeDataFormForSlider(e));
       setIsErrorOccurred(false);
       onFillIn({ images: e.target.files });
       return;
@@ -67,13 +67,23 @@ PetPhoto.propTypes = {
 export default memo(PetPhoto);
 
 const areFileSizesUnder5MB = (e) => {
-  const { files } = e.target;
-  return files.some((file) => file.size > 1024 * 1024 * 5);
+  const doesFileExistOver5MB = pipe(
+    Lazy.filter((file) => file.size > 1024 * 1024 * 5),
+    take(1),
+    isLength.GreaterThanOrEqual(1)
+  );
+
+  return !doesFileExistOver5MB([...e.target.files]);
 };
 
-const isTheNumberOfPhotosUnderFour = (e) => e.target.files.length <= 3;
-const makeDataFormForSlider = (files) => {
-  return files.map((file) => ({
-    image: URL.createObjectURL(file)
-  }));
+const isTheNumberOfPhotosUnderFour = (e) => isLength.LessThanOrEqual(3)(e.target.files);
+
+const makeDataFormForSlider = (e) => {
+  return go(
+    [...e.target.files],
+    Lazy.map((file) => ({
+      image: URL.createObjectURL(file)
+    })),
+    take(Infinity)
+  );
 };
