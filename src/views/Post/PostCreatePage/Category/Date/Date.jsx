@@ -12,7 +12,7 @@ const Date = ({ margin, onFillIn, onLeaveBlank }) => {
 
   const handleChange = (e) => {
     if (isYearSelection(e)) {
-      if (isDefaultOptionSelecetd(e)) {
+      if (isDefaultOptionSelected(e)) {
         setSelectedYear(null);
         setSelectedMonth(null);
         setSelectedDay(null);
@@ -23,7 +23,7 @@ const Date = ({ margin, onFillIn, onLeaveBlank }) => {
     }
 
     if (isMonthSelection(e)) {
-      if (isDefaultOptionSelecetd(e)) {
+      if (isDefaultOptionSelected(e)) {
         setSelectedMonth(null);
         setSelectedDay(null);
       } else {
@@ -33,7 +33,7 @@ const Date = ({ margin, onFillIn, onLeaveBlank }) => {
     }
 
     if (isDaySelection(e)) {
-      isDefaultOptionSelecetd(e) ? setSelectedDay(null) : setSelectedDay(Number(e.target.value));
+      isDefaultOptionSelected(e) ? setSelectedDay(null) : setSelectedDay(Number(e.target.value));
       return;
     }
   };
@@ -155,7 +155,7 @@ const isMonthThatHas30Days = (month) => [4, 6, 9, 11].includes(month);
 const isYearSelection = (e) => e.target[0].textContent === '년';
 const isMonthSelection = (e) => e.target[0].textContent === '월';
 const isDaySelection = (e) => e.target[0].textContent === '일';
-const isDefaultOptionSelecetd = (e) => e.target[0].textContent === e.target.value;
+const isDefaultOptionSelected = (e) => e.target[0].textContent === e.target.value;
 const areAllOptionsSelected = (year, month, day) => year && month && day;
 const makeYYYYMMDDForm = (number) => (number < 10 && `0${number}`) || number;
 const February = 2;
