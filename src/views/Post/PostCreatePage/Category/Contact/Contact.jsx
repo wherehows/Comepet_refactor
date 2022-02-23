@@ -5,7 +5,7 @@ import { Label } from '@/components/Label';
 import { Input } from '@/components/Input';
 
 const Contact = ({ margin, onFillIn, onLeaveBlank }) => {
-  const handleInput = (e) => {
+  const handleInputTelNumber = (e) => {
     isInputEmpty(e) ? onLeaveBlank('telNumber') : onFillIn({ telNumber: e.target.value });
   };
 
@@ -20,7 +20,7 @@ const Contact = ({ margin, onFillIn, onLeaveBlank }) => {
         maxLength="15"
         margin="1.8rem 0 0 0"
         required
-        onChange={handleInput}
+        onChange={handleInputTelNumber}
       />
     </Wrapper>
   );

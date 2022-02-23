@@ -13,7 +13,7 @@ const STATUS = Object.freeze({
 });
 
 const Status = ({ onFillIn, onLeaveBlank }) => {
-  const handleChange = (e) => {
+  const handleSelectStatus = (e) => {
     isDefalutOptionSelected(e)
       ? onLeaveBlank('status')
       : onFillIn({ status: STATUS[e.target.value] });
@@ -27,7 +27,7 @@ const Status = ({ onFillIn, onLeaveBlank }) => {
       <LineBreakWrapper margin="1.8rem 0 0 0">
         <SelectionBox
           id="status"
-          onChange={handleChange}
+          onChange={handleSelectStatus}
           options={['실종', '목격', '보호', '완료']}
           defaultOption="상태 옵션"
           required

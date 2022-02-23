@@ -17,7 +17,8 @@ const SliderButton = ({ direction, handleSlide }) => {
       left={(direction === 'left' && '1rem') || 'auto'}
       right={(direction === 'right' && '1rem') || 'auto'}
       direction={direction}
-      onClick={handleSlide}>
+      onClick={handleSlide}
+      type="button">
       {(direction === 'right' && <NextArrow />) || (direction === 'left' && <PrevArrow />)}
     </Button>
   );
