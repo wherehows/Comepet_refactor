@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import LineBreakWrapper from '../Common/LineBreakWrapper';
@@ -29,4 +29,4 @@ PetInformation.propTypes = {
   margin: PropTypes.string
 };
 
-export default PetInformation;
+export default memo(PetInformation);
