@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/Button';
@@ -19,8 +19,6 @@ import { placeData, animalData } from '@/data/data';
 const MARGIN_BETWEEN_CATEGORY = '5rem 0 0 0';
 
 const PostCreatePage = () => {
-  const [isErrorExist, setIsErrorExist] = useState(false);
-
   const navigate = useNavigate();
 
   const { values, handleFillIn, handleLeaveBlank, handleSubmit } = useForm({
@@ -45,8 +43,12 @@ const PostCreatePage = () => {
 
       const { images, ...param } = values; // eslint-disable-line no-unused-vars
       formData.append('param', new Blob([JSON.stringify(param)], { type: 'application/json' }));
+
+      return false;
     },
-    handleNavigate: () => {},
+    handleNavigate: (res) => {
+      navigate(`/post/${res.id}`, { replace: true });
+    },
     validate: ({
       status,
       date,
@@ -71,15 +73,13 @@ const PostCreatePage = () => {
       if (!sex) errors.sex = '성별을 선택해주세요';
       if (!age) errors.age = '나이를 입력해주세요';
       if (!content) errors.content = '내용을 작성해주세요';
-      Object.keys(errors).length !== 0 && setIsErrorExist(isErrorExist);
       return errors;
     }
   });
 
   return (
     <Wrapper>
-      {/* <ShortHeader /> */}
-      <Form onSubmit={handleSubmit}>
+      <Form>
         <Status onFillIn={handleFillIn} onLeaveBlank={handleLeaveBlank} />
         <Date
           margin={MARGIN_BETWEEN_CATEGORY}
@@ -120,7 +120,7 @@ const PostCreatePage = () => {
           onLeaveBlank={handleLeaveBlank}
         />
         <ButtonWrapper margin={MARGIN_BETWEEN_CATEGORY}>
-          <Button width="60%" margin="5% auto 0 auto" bgColor="normalOrange">
+          <Button width="60%" margin="5% auto 0 auto" bgColor="normalOrange" onClick={handleSubmit}>
             작성하기
           </Button>
           <Button
