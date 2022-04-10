@@ -13,11 +13,13 @@ const useForm = ({ initialValues, onSubmit, validate, handleNavigate, handleErro
     setValues((values) => ({ ...values, [param]: blankValue || null }));
   }, []);
 
-  const handleSubmit = useCallback(async (e) => {
+  const handleSubmit = async (e) => {
     setIsLoading(true);
     e.preventDefault();
     const newErrors = (validate && validate(values)) || {};
     let onSubmitResult = null;
+
+    console.log('form 작성 내용 확인', values);
 
     if (Object.keys(newErrors).length === 0) {
       onSubmitResult = await onSubmit();
@@ -27,7 +29,7 @@ const useForm = ({ initialValues, onSubmit, validate, handleNavigate, handleErro
     handleErrors && Object.keys(newErrors).length !== 0 && handleErrors();
     setIsLoading(false);
     onSubmitResult && handleNavigate(onSubmitResult);
-  }, []);
+  };
 
   return {
     values,
