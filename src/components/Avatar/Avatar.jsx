@@ -1,3 +1,4 @@
+import React from 'react';
 import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 import { Image as ImageComponent } from '@/components/Image';
