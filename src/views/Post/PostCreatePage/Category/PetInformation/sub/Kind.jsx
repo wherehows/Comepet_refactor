@@ -148,7 +148,7 @@ const Kind = ({ animals, onFillIn, onLeaveBlank }) => {
           );
       }
     },
-    [animal]
+    [animal, isAnimalUnknown, kindsSelectionBoxRef, kindsCheckBoxRef, animalList]
   );
 
   return (
