@@ -6,12 +6,12 @@ import { Input } from '@/components/Input';
 
 const AgeAndSex = ({ onFillIn, onLeaveBlank }) => {
   const handleFillInAge = (e) => {
-    isInputEmpty(e) ? onLeaveBlank('age', -1) : onFillIn({ age: e.target.value });
+    isInputEmpty(e) ? onLeaveBlank({ age: -1 }) : onFillIn({ age: e.target.value });
   };
 
   const handleSelectSex = (e) => {
     if (isDefaultOptionSelected(e)) {
-      onLeaveBlank('sex');
+      onLeaveBlank({ sex: null });
       return;
     }
 
@@ -23,7 +23,6 @@ const AgeAndSex = ({ onFillIn, onLeaveBlank }) => {
   return (
     <Wrapper>
       <Input
-        id="age-input"
         ariaLabel="age"
         width="10rem"
         placeholder="나이"

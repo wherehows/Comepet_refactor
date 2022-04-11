@@ -43,6 +43,7 @@ const SelectionBox = ({
         chosen: false,
         disabled
       });
+
       setColor(nextColor);
     }
   }, [options, required, usedAt, disabled]);

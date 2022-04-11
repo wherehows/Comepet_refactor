@@ -44,7 +44,7 @@ const Date = ({ margin, onFillIn, onLeaveBlank }) => {
         date: `${selectedYear}-${makeYYYYMMDDForm(selectedMonth)}-${makeYYYYMMDDForm(selectedDay)}`
       });
     } else {
-      onLeaveBlank('date');
+      onLeaveBlank({ date: null });
     }
   }, [selectedYear, selectedMonth, selectedDay]);
 

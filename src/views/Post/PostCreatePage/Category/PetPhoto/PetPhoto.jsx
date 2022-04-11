@@ -15,7 +15,7 @@ const PetPhoto = ({ margin, onFillIn }) => {
     inputRef.current.click();
   };
 
-  const handleFileChange = (e) => {
+  const handleChangeFile = (e) => {
     if (isTheNumberOfPhotosUnderFour(e) && areFileSizesUnder5MB(e)) {
       setFiles(makeDataFormForSlider(e));
       setIsErrorOccurred(false);
@@ -30,7 +30,7 @@ const PetPhoto = ({ margin, onFillIn }) => {
   return (
     <Wrapper margin={margin}>
       <Slider imageList={files} size="large" />
-      <Input onChange={handleFileChange} ref={inputRef} type="file" accept="image/*" multiple />
+      <Input onChange={handleChangeFile} ref={inputRef} type="file" accept="image/*" multiple />
       <Caution isErrorOccurred={isErrorOccurred}>※ 이미지 3개를 동시에 선택해주세요</Caution>
       <Caution isErrorOccurred={isErrorOccurred}>한 장당 5MB 이하여야만 합니다.</Caution>
       <Button

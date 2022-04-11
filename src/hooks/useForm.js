@@ -1,25 +1,23 @@
-import { useState, useCallback } from 'react';
+import { useState } from 'react';
 
 const useForm = ({ initialValues, onSubmit, validate, handleNavigate, handleErrors }) => {
   const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+  console.log('form 작성 내용 확인', values);
+  const handleFillIn = (property) => {
+    setValues((values) => ({ ...values, ...property }));
+  };
 
-  const handleFillIn = useCallback((param) => {
-    setValues((values) => ({ ...values, ...param }));
-  }, []);
-
-  const handleLeaveBlank = useCallback((param, blankValue) => {
-    setValues((values) => ({ ...values, [param]: blankValue || null }));
-  }, []);
+  const handleLeaveBlank = (property) => {
+    setValues((values) => ({ ...values, ...property }));
+  };
 
   const handleSubmit = async (e) => {
     setIsLoading(true);
     e.preventDefault();
     const newErrors = (validate && validate(values)) || {};
     let onSubmitResult = null;
-
-    console.log('form 작성 내용 확인', values);
 
     if (Object.keys(newErrors).length === 0) {
       onSubmitResult = await onSubmit();

@@ -4,10 +4,10 @@ import styled from '@emotion/styled';
 import { Label } from '@/components/Label';
 
 const Content = ({ margin, onFillIn, onLeaveBlank }) => {
-  const handleInput = (e) => {
+  const handleInputContent = (e) => {
     const pureText = e.target.textContent;
     const textWithTags = e.target.innerHTML;
-    isInputEmpty(pureText) ? onLeaveBlank('content') : onFillIn({ content: textWithTags });
+    isInputEmpty(pureText) ? onLeaveBlank({ content: null }) : onFillIn({ content: textWithTags });
   };
 
   const handleKeyDown = (e) => {
@@ -31,7 +31,7 @@ const Content = ({ margin, onFillIn, onLeaveBlank }) => {
         contentEditable
         placeholder="내용을 입력해주세요"
         onKeyDown={handleKeyDown}
-        onInput={handleInput}
+        onInput={handleInputContent}
         onPaste={handlePaste}
       />
     </Wrapper>

@@ -31,7 +31,7 @@ const PostCreatePage = () => {
       telNumber: null,
       animalId: null,
       animalKindName: null,
-      age: null,
+      age: -1,
       sex: null,
       chipNumber: null,
       tags: [],
@@ -39,10 +39,9 @@ const PostCreatePage = () => {
       images: null
     },
     onSubmit: async () => {
-      const formData = makeFormDataAppendingImages(values.images);
-
+      const formData = getFormDataAppendingImages(values.images); // eslint-disable-line no-unused-vars
       const { images, ...param } = values; // eslint-disable-line no-unused-vars
-      formData.append('param', new Blob([JSON.stringify(param)], { type: 'application/json' }));
+      // API 처리
 
       return false;
     },
@@ -79,7 +78,7 @@ const PostCreatePage = () => {
 
   return (
     <Wrapper>
-      <Form>
+      <Form onSubmit={handleSubmit}>
         <Status onFillIn={handleFillIn} onLeaveBlank={handleLeaveBlank} />
         <Date
           margin={MARGIN_BETWEEN_CATEGORY}
@@ -120,7 +119,7 @@ const PostCreatePage = () => {
           onLeaveBlank={handleLeaveBlank}
         />
         <ButtonWrapper margin={MARGIN_BETWEEN_CATEGORY}>
-          <Button width="60%" margin="5% auto 0 auto" bgColor="normalOrange" onClick={handleSubmit}>
+          <Button width="60%" margin="5% auto 0 auto" bgColor="normalOrange" type="submit">
             작성하기
           </Button>
           <Button
@@ -149,7 +148,7 @@ const ButtonWrapper = styled.div`
 
 export default PostCreatePage;
 
-const makeFormDataAppendingImages = (images) => {
+const getFormDataAppendingImages = (images) => {
   const formData = new FormData();
 
   if (!images) {

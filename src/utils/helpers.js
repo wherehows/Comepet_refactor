@@ -19,6 +19,7 @@ export const formatDate = (date) => {
 export const isValidInput = (regex, target) => {
   return regex.test(target);
 };
+
 export const timeForToday = (value) => {
   const today = new Date();
   const timeValue = new Date(value);

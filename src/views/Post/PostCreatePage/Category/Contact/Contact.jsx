@@ -6,7 +6,7 @@ import { Input } from '@/components/Input';
 
 const Contact = ({ margin, onFillIn, onLeaveBlank }) => {
   const handleInputTelNumber = (e) => {
-    isInputEmpty(e) ? onLeaveBlank('telNumber') : onFillIn({ telNumber: e.target.value });
+    isInputEmpty(e) ? onLeaveBlank({ telNumber: null }) : onFillIn({ telNumber: e.target.value });
   };
 
   return (

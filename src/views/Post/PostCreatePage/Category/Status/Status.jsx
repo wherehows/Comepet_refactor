@@ -15,7 +15,7 @@ const STATUS = Object.freeze({
 const Status = ({ onFillIn, onLeaveBlank }) => {
   const handleSelectStatus = (e) => {
     isDefalutOptionSelected(e)
-      ? onLeaveBlank('status')
+      ? onLeaveBlank({ status: null })
       : onFillIn({ status: STATUS[e.target.value] });
   };
 

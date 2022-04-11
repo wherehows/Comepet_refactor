@@ -11,11 +11,11 @@ const HashTag = ({ margin, onFillIn, onLeaveBlank }) => {
   const [error, setErrors] = useState('');
   const [inputValue, setInputValue] = useState('');
 
-  const handleInput = (e) => {
+  const handleInputTag = (e) => {
     setInputValue(e.target.value);
   };
 
-  const handleEnter = (e) => {
+  const handleCheckEnter = (e) => {
     if (
       isEnterEntered(e) &&
       !isEmpty(inputValue) &&
@@ -43,7 +43,7 @@ const HashTag = ({ margin, onFillIn, onLeaveBlank }) => {
     const nextTags = tags.filter(({ id }) => id !== key);
 
     setTags(nextTags);
-    isTagEmpty(nextTags) ? onLeaveBlank('tags', []) : onFillIn({ tags: nextTags });
+    isTagEmpty(nextTags) ? onLeaveBlank({ tags: [] }) : onFillIn({ tags: nextTags });
   };
 
   return (
@@ -55,8 +55,8 @@ const HashTag = ({ margin, onFillIn, onLeaveBlank }) => {
         id="hash-tag"
         placeholder="해쉬태그 입력 후 엔터를 눌러주세요"
         margin="1.8rem 0 1.8rem 0"
-        onChange={handleInput}
-        onKeyPress={handleEnter}
+        onChange={handleInputTag}
+        onKeyPress={handleCheckEnter}
         value={inputValue}
       />
       <Error error={error}>{error}</Error>

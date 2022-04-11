@@ -5,8 +5,8 @@ import { Label } from '@/components/Label';
 import { Input } from '@/components/Input';
 
 const ChipInformation = ({ margin, onFillIn, onLeaveBlank }) => {
-  const handleChange = (e) => {
-    isInputEmpty(e) ? onLeaveBlank('chipNumber') : onFillIn({ chipNumber: e.target.value });
+  const handleInputChipNumber = (e) => {
+    isInputEmpty(e) ? onLeaveBlank({ chipNumber: null }) : onFillIn({ chipNumber: e.target.value });
   };
 
   return (
@@ -19,7 +19,7 @@ const ChipInformation = ({ margin, onFillIn, onLeaveBlank }) => {
         placeholder="칩번호를 입력해 주세요"
         type="number"
         margin="1.8rem 0 0 0"
-        onChange={handleChange}
+        onChange={handleInputChipNumber}
       />
     </Wrapper>
   );

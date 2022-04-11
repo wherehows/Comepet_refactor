@@ -18,14 +18,16 @@ const Place = ({ margin, places, onFillIn, onLeaveBlank }) => {
 
   const handleChange = (e) => {
     if (isDetailAddressEntered(e)) {
-      isInputEmpty(e) ? onLeaveBlank('detailAddress') : onFillIn({ detailAddress: e.target.value });
+      isInputEmpty(e)
+        ? onLeaveBlank({ detailAddress: null })
+        : onFillIn({ detailAddress: e.target.value });
       return;
     }
 
     if (isCitySelection(e)) {
       if (isDefaultOptionSelected(e)) {
-        onLeaveBlank('cityId');
-        onLeaveBlank('townId');
+        onLeaveBlank({ cityId: null });
+        onLeaveBlank({ townId: null });
         setSelectedCity(null);
         setTowns([]);
       } else {
@@ -34,7 +36,7 @@ const Place = ({ margin, places, onFillIn, onLeaveBlank }) => {
         const targetCityId = targetCity?.id;
         setSelectedCity(targetCity.name);
         onFillIn({ cityId: targetCityId });
-        onLeaveBlank('townId');
+        onLeaveBlank({ townId: null });
 
         const targetTowns = places.find(({ name }) => name === e.target.value);
         const nextTowns = targetTowns.towns.map(({ name }) => name);
@@ -45,7 +47,7 @@ const Place = ({ margin, places, onFillIn, onLeaveBlank }) => {
 
     if (isTownSelection(e)) {
       if (isDefaultOptionSelected(e)) {
-        onLeaveBlank('townId');
+        onLeaveBlank({ townId: null });
       } else {
         const targetCity = places.find(({ name }) => name === selectedCity);
         const towns = targetCity?.towns;
