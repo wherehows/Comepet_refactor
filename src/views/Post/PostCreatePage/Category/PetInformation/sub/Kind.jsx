@@ -56,7 +56,7 @@ const Kind = ({ animals, onFillIn, onLeaveBlank }) => {
   };
 
   const handleInputKind = (e) => {
-    if (isInputLength.equal(0)(e.target.value)) {
+    if (isInputLength.Equal(0)(e.target.value)) {
       onLeaveBlank({ animalKindName: null });
       return;
     }
@@ -122,10 +122,10 @@ const Kind = ({ animals, onFillIn, onLeaveBlank }) => {
                 onChange={handleInputKind}
               />
               <CheckBox
+                id="dont-know-kinds"
                 ariaLabel="dont know kinds"
                 margin="0 0 0 1.2rem"
                 fontSize="1.4rem"
-                i
                 onChange={handleCheckIsAnimalUnknown}
                 propRef={kindsCheckBoxRef}
               />
